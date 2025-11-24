@@ -5,6 +5,7 @@ import Button from '@/components/ui/button';
 import Card from '@/components/ui/card';
 import { Eye, EyeOff, Loader2, CheckCircle, ArrowLeft } from 'lucide-react';
 import { toast } from 'sonner';
+import API from '@/utils/api';
 
 const ResetPassword = () => {
   const [password, setPassword] = useState('');
@@ -16,7 +17,7 @@ const ResetPassword = () => {
   const [token, setToken] = useState('');
 
   const router = useRouter();
-  const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.REACT_APP_BACKEND_URL;
+  const API_URL = API.HOST;
 
   useEffect(() => {
     // Get token from URL query parameter

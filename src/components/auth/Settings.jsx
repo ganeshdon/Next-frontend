@@ -5,6 +5,7 @@ import  Button  from '@/components/ui/button';
 import { User, CreditCard, Bell, Globe, Shield, AlertTriangle } from 'lucide-react';
 import { toast } from 'sonner';
 import { useRouter } from 'next/router';
+import API from '@/utils/api';
 
 const Settings = () => {
   const [activeTab, setActiveTab] = useState('account');
@@ -17,7 +18,7 @@ const Settings = () => {
   const { user, token, refreshUser, logout } = useAuth();
   const router = useRouter();
 
-  const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.REACT_APP_BACKEND_URL;
+  const API_URL = API.HOST;
 
   useEffect(() => {
     if (user) {

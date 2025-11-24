@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
+import API from '@/utils/api';
 
 const EnterpriseContactModal = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
@@ -25,7 +26,7 @@ const EnterpriseContactModal = ({ isOpen, onClose }) => {
     setIsSubmitting(true);
 
     try {
-      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.REACT_APP_BACKEND_URL;
+      const backendUrl = API.HOST;
 
       const response = await fetch(`${backendUrl}/api/enterprise-contact`, {
         method: 'POST',

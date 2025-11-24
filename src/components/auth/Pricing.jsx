@@ -6,6 +6,7 @@ import { Check, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/router';
 import { toast } from 'sonner';
 import EnterpriseContactModal from '@/components/Homepage/EnterpriseContactModal';
+import API from '@/utils/api';
 
 const Pricing = () => {
   const [billingInterval, setBillingInterval] = useState('monthly');
@@ -120,7 +121,7 @@ const Pricing = () => {
     setLoadingPlan(plan.id);
 
     try {
-      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.REACT_APP_BACKEND_URL;
+      const backendUrl = API.HOST;
 
       const headers = { 'Content-Type': 'application/json' };
       const fetchOptions = { method: 'POST', headers, body: JSON.stringify({ package_id: plan.id, billing_interval: billingInterval }) };
@@ -212,60 +213,66 @@ const Pricing = () => {
 
         {/* Pricing Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-          {plans.map((plan) => (
-            <Card
-              key={plan.id}
-              className={`p-8 bg-white border-2 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 ${user?.subscription_tier === plan.id
-                ? 'border-blue-500 ring-2 ring-blue-200'
-                : 'border-gray-200 hover:border-blue-300'
-                }`}
-            >
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-3">{plan.name}</h3>
-                <div className="mb-6">
-                  <div className="flex items-baseline justify-center">
-                    <span className="text-5xl font-bold text-gray-900">
-                      {formatPrice(plan)}
-                    </span>
-                    {typeof plan.price[billingInterval] === 'number' && (
-                      <span className="text-lg text-gray-600 ml-2">/month</span>
-                    )}
+          {plans.map((plan) => {
+            // Check if this is the current plan - must match both tier AND billing interval
+            const isCurrentPlan = user?.subscription_tier === plan.id &&
+              user?.billing_interval === billingInterval;
+
+            return (
+              <Card
+                key={plan.id}
+                className={`p-8 bg-white border-2 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 ${isCurrentPlan
+                  ? 'border-blue-500 ring-2 ring-blue-200'
+                  : 'border-gray-200 hover:border-blue-300'
+                  }`}
+              >
+                <div className="text-center mb-8">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-3">{plan.name}</h3>
+                  <div className="mb-6">
+                    <div className="flex items-baseline justify-center">
+                      <span className="text-5xl font-bold text-gray-900">
+                        {formatPrice(plan)}
+                      </span>
+                      {typeof plan.price[billingInterval] === 'number' && (
+                        <span className="text-lg text-gray-600 ml-2">/month</span>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <Button
-                onClick={() => handlePlanSelect(plan)}
-                className={`w-full py-4 px-6 rounded-xl font-semibold text-base mb-8 transition-all duration-200 ${user?.subscription_tier === plan.id
-                  ? 'bg-gray-100 text-gray-600 cursor-not-allowed'
-                  : 'bg-linear-to-br from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-md hover:shadow-lg transform hover:scale-105'
-                  }`}
-                disabled={user?.subscription_tier === plan.id || loadingPlan === plan.id || checkingStatus}
-              >
-                {loadingPlan === plan.id ? (
-                  <>
-                    <Loader2 className="h-5 w-5 animate-spin mr-2 inline" />
-                    Processing...
-                  </>
-                ) : user?.subscription_tier === plan.id ? 'Current Plan' : plan.buttonText}
-              </Button>
+                <Button
+                  onClick={() => handlePlanSelect(plan)}
+                  className={`w-full py-4 px-6 rounded-xl font-semibold text-base mb-8 transition-all duration-200 ${isCurrentPlan
+                    ? 'bg-gray-100 text-gray-600 cursor-not-allowed'
+                    : 'bg-linear-to-br from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-md hover:shadow-lg transform hover:scale-105'
+                    }`}
+                  disabled={isCurrentPlan || loadingPlan === plan.id || checkingStatus}
+                >
+                  {loadingPlan === plan.id ? (
+                    <>
+                      <Loader2 className="h-5 w-5 animate-spin mr-2 inline" />
+                      Processing...
+                    </>
+                  ) : isCurrentPlan ? 'Current Plan' : plan.buttonText}
+                </Button>
 
-              {plan.features.length > 0 && (
-                <div className="border-t border-gray-200 pt-6">
-                  <ul className="space-y-4">
-                    {plan.features.map((feature, index) => (
-                      <li key={index} className="flex items-center text-sm text-gray-700">
-                        <div className="w-5 h-5 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center mr-3 shrink-0">
-                          <Check className="h-3 w-3 text-white" />
-                        </div>
-                        <span className="font-medium">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </Card>
-          ))}
+                {plan.features.length > 0 && (
+                  <div className="border-t border-gray-200 pt-6">
+                    <ul className="space-y-4">
+                      {plan.features.map((feature, index) => (
+                        <li key={index} className="flex items-center text-sm text-gray-700">
+                          <div className="w-5 h-5 rounded-full bg-linear-to-br from-green-400 to-green-600 flex items-center justify-center mr-3 shrink-0">
+                            <Check className="h-3 w-3 text-white" />
+                          </div>
+                          <span className="font-medium">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </Card>
+            );
+          })}
         </div>
       </div>
 

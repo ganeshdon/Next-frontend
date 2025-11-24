@@ -5,6 +5,7 @@ import Button from '@/components/ui/button';
 import { FileText, Download, Trash2, Calendar, Search, Filter } from 'lucide-react';
 import { toast } from 'sonner';
 import Link from 'next/link';
+import API from '@/utils/api';
 
 const Documents = () => {
   const [documents, setDocuments] = useState([]);
@@ -14,10 +15,7 @@ const Documents = () => {
   const { token, loading: authLoading, isAuthenticated } = useAuth();
 
   const getApiUrl = () => {
-    if (typeof window !== 'undefined') {
-      return process.env.NEXT_PUBLIC_BACKEND_URL || process.env.REACT_APP_BACKEND_URL;
-    }
-    return process.env.NEXT_PUBLIC_BACKEND_URL || process.env.REACT_APP_BACKEND_URL || '';
+    return API.HOST;
   };
 
   const fetchDocuments = useCallback(async () => {

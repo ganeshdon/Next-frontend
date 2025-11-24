@@ -5,6 +5,7 @@ import Button from '@/components/ui/button';
 import Card from '@/components/ui/card';
 import { Loader2, Mail, ArrowLeft } from 'lucide-react';
 import { toast } from 'sonner';
+import API from '@/utils/api';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -12,7 +13,7 @@ const ForgotPassword = () => {
   const [emailSent, setEmailSent] = useState(false);
 
   const router = useRouter();
-  const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.REACT_APP_BACKEND_URL;
+  const API_URL = API.HOST;
 
   const handleSubmit = async (e) => {
     e.preventDefault();

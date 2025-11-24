@@ -6,6 +6,7 @@ import Button from '@/components/ui/button';
 import Card from '@/components/ui/card';
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
+import API from '@/utils/api';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -186,7 +187,7 @@ const Login = () => {
             <div className="mt-6">
               <Button
                 type="button"
-                onClick={() => window.location.href = `https://auth.emergentagent.com/?redirect=${encodeURIComponent(window.location.origin + '/')}`}
+                onClick={() => window.location.href = API.getOAuthUrl()}
                 className="w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 rounded-lg font-medium transition-colors hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center justify-center"
                 disabled={loading}
               >

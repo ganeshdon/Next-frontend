@@ -9,6 +9,7 @@ import Button from '@/components/ui/button';
 import Card from '@/components/ui/card';
 import { useRouter } from 'next/router';
 import { getBrowserFingerprint } from '@/utils/fingerprint';
+import API from '@/utils/api';
 
 const Converter = () => {
   const [currentStep, setCurrentStep] = useState('upload');
@@ -79,7 +80,7 @@ const Converter = () => {
         }
 
         try {
-          const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.REACT_APP_BACKEND_URL;
+          const backendUrl = API.HOST;
           const url = `${backendUrl}/api/dodo/check-subscription/${subscriptionId}`;
 
           console.log('📞 Calling:', url);
@@ -217,7 +218,7 @@ const Converter = () => {
       // Automatically check subscription status
       const checkPendingSubscription = async () => {
         try {
-          const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.REACT_APP_BACKEND_URL;
+          const backendUrl = API.HOST;
           const url = `${backendUrl}/api/dodo/check-subscription/${pendingSubscriptionId}`;
 
           console.log('📞 Auto-checking subscription:', url);
@@ -330,7 +331,7 @@ const Converter = () => {
   // Check anonymous conversion limit
   const checkAnonymousLimit = async (fingerprint) => {
     try {
-      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.REACT_APP_BACKEND_URL;
+      const backendUrl = API.HOST;
 
       const response = await fetch(`${backendUrl}/api/anonymous/check`, {
         method: 'POST',
@@ -443,7 +444,7 @@ const Converter = () => {
       const formData = new FormData();
       formData.append('file', file);
 
-      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.REACT_APP_BACKEND_URL;
+      const backendUrl = API.HOST;
 
       let endpoint = '/api/process-pdf';
       let headers = {};
