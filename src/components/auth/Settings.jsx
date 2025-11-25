@@ -427,7 +427,7 @@ const Settings = () => {
               </thead>
               <tbody>
                 {invoices.map((invoice, index) => (
-                  <tr key={invoice.invoice_id || index} className="border-b border-gray-100 hover:bg-gray-50">
+                  <tr key={`${invoice.invoice_id || invoice.payment_id || 'invoice'}-${index}`} className="border-b border-gray-100 hover:bg-gray-50">
                     <td className="py-3 px-4 text-sm text-gray-600">
                       {formatDate(invoice.created_at)}
                     </td>

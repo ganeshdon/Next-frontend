@@ -20,8 +20,58 @@ const Pricing = () => {
   useEffect(() => {
     const paymentSuccess = router.query.payment;
 
-    if (paymentSuccess === 'success' && isAuthenticated) {
+    if (paymentSuccess === 'success' && isAuthenticated && token) {
       toast.success('Payment successful! Your subscription has been activated.');
+
+      // Get subscription_id from sessionStorage
+      const subscriptionId = sessionStorage.getItem('pending_subscription_id');
+
+      // Fetch and save invoice from Dodo API
+      if (subscriptionId) {
+        const fetchInvoice = async () => {
+          try {
+            // Wait a bit for token to be available
+            await new Promise(resolve => setTimeout(resolve, 2000));
+
+            const backendUrl = API.HOST;
+            const headers = { 'Content-Type': 'application/json' };
+            const fetchOptions = { method: 'POST', headers };
+
+            // Get token from multiple sources
+            const currentToken = token ||
+              (typeof window !== 'undefined' ? localStorage.getItem('token') : null) ||
+              (typeof window !== 'undefined' ? sessionStorage.getItem('token') : null);
+
+            if (currentToken && currentToken !== 'oauth_session') {
+              headers['Authorization'] = `Bearer ${currentToken}`;
+            } else {
+              fetchOptions.credentials = 'include';
+            }
+
+            const invoiceUrl = `${backendUrl}/api/dodo/fetch-and-save-invoice?subscription_id=${subscriptionId}`;
+            const invoiceResponse = await fetch(invoiceUrl, fetchOptions);
+
+            if (invoiceResponse.ok) {
+              const invoiceResult = await invoiceResponse.json();
+              console.log('✅ Invoice fetched and saved:', invoiceResult);
+              if (invoiceResult.invoices_saved > 0) {
+                toast.success(`Invoice saved successfully!`);
+              } else if (invoiceResult.message && invoiceResult.message.includes('already exists')) {
+                console.log('ℹ️ Invoice already exists');
+              }
+            } else {
+              const errorText = await invoiceResponse.text();
+              console.warn('⚠️ Could not fetch invoice:', errorText);
+            }
+          } catch (invoiceError) {
+            console.error('❌ Error fetching invoice:', invoiceError);
+            // Don't fail the whole flow if invoice fetch fails
+          }
+        };
+
+        // Fetch invoice after a short delay to ensure payment is processed
+        setTimeout(() => fetchInvoice(), 2000);
+      }
 
       // Poll for user data updates
       const pollForUpdate = async (attempt = 1, maxAttempts = 10) => {
@@ -53,7 +103,7 @@ const Pricing = () => {
       // Clean URL
       router.replace(router.pathname, undefined, { shallow: true });
     }
-  }, [isAuthenticated, router.query.payment, refreshUser, router]);
+  }, [isAuthenticated, router.query.payment, refreshUser, router, token]);
 
   // Removed old Stripe payment status polling - Dodo handles via webhooks
 

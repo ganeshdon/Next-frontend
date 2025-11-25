@@ -92,7 +92,7 @@ const Converter = () => {
 
           // Get the actual token (session_token for OAuth, JWT for regular auth)
           const authType = typeof window !== 'undefined' ? localStorage.getItem('auth_type') : null;
-          const actualToken = (authType === 'oauth' && token === 'oauth_session') 
+          const actualToken = (authType === 'oauth' && token === 'oauth_session')
             ? (typeof window !== 'undefined' ? localStorage.getItem('oauth_session_token') : null)
             : token;
 
@@ -115,6 +115,68 @@ const Converter = () => {
 
             if (result.status === 'success') {
               toast.success('🎉 Subscription activated! Your credits have been updated.');
+
+              // Fetch and save invoice from Dodo API (with retry logic)
+              const fetchInvoiceWithRetry = async (retries = 5) => {
+                for (let i = 0; i < retries; i++) {
+                  try {
+                    // Wait a bit for token to be available
+                    if (i > 0) {
+                      await new Promise(resolve => setTimeout(resolve, 1000 * i));
+                    }
+
+                    // Get current token (check multiple sources)
+                    const currentToken = token ||
+                      (typeof window !== 'undefined' ? localStorage.getItem('token') : null) ||
+                      (typeof window !== 'undefined' ? sessionStorage.getItem('token') : null);
+
+                    if (!currentToken && i < retries - 1) {
+                      console.log(`⏳ Waiting for token... (attempt ${i + 1}/${retries})`);
+                      continue;
+                    }
+
+                    console.log('📄 Fetching invoice for subscription:', subscriptionId);
+                    const invoiceUrl = `${backendUrl}/api/dodo/fetch-and-save-invoice?subscription_id=${subscriptionId}`;
+
+                    const invoiceHeaders = { 'Content-Type': 'application/json' };
+                    const invoiceOptions = { method: 'POST', headers: invoiceHeaders };
+
+                    if (currentToken && currentToken !== 'oauth_session') {
+                      invoiceHeaders['Authorization'] = `Bearer ${currentToken}`;
+                    } else {
+                      invoiceOptions.credentials = 'include';
+                    }
+
+                    const invoiceResponse = await fetch(invoiceUrl, invoiceOptions);
+
+                    if (invoiceResponse.ok) {
+                      const invoiceResult = await invoiceResponse.json();
+                      console.log('✅ Invoice fetched and saved:', invoiceResult);
+                      if (invoiceResult.invoices_saved > 0) {
+                        toast.success(`Invoice saved successfully!`);
+                      } else if (invoiceResult.message && invoiceResult.message.includes('already exists')) {
+                        console.log('ℹ️ Invoice already exists');
+                      }
+                      return; // Success, exit retry loop
+                    } else {
+                      const errorText = await invoiceResponse.text();
+                      console.warn(`⚠️ Could not fetch invoice (attempt ${i + 1}):`, errorText);
+                      if (i === retries - 1) {
+                        console.warn('⚠️ Invoice fetch failed after all retries, but continuing...');
+                      }
+                    }
+                  } catch (invoiceError) {
+                    console.error(`❌ Error fetching invoice (attempt ${i + 1}):`, invoiceError);
+                    if (i === retries - 1) {
+                      console.warn('⚠️ Invoice fetch failed after all retries');
+                    }
+                  }
+                }
+              };
+
+              // Start invoice fetch (will retry if needed)
+              fetchInvoiceWithRetry();
+
               // Clear the pending subscription
               sessionStorage.removeItem('pending_subscription_id');
               console.log('🗑️ Cleared pending subscription from storage');
@@ -228,7 +290,7 @@ const Converter = () => {
 
           // Get the actual token (session_token for OAuth, JWT for regular auth)
           const authType = typeof window !== 'undefined' ? localStorage.getItem('auth_type') : null;
-          const actualToken = (authType === 'oauth' && token === 'oauth_session') 
+          const actualToken = (authType === 'oauth' && token === 'oauth_session')
             ? (typeof window !== 'undefined' ? localStorage.getItem('oauth_session_token') : null)
             : token;
 
@@ -248,6 +310,46 @@ const Converter = () => {
 
             if (result.status === 'success') {
               console.log('✅ Pending subscription activated!');
+
+              // Fetch and save invoice from Dodo API (works without token, uses credentials)
+              const fetchInvoice = async () => {
+                try {
+                  console.log('📄 Fetching invoice for subscription:', pendingSubscriptionId);
+                  const invoiceUrl = `${backendUrl}/api/dodo/fetch-and-save-invoice?subscription_id=${pendingSubscriptionId}`;
+
+                  const invoiceHeaders = { 'Content-Type': 'application/json' };
+                  const invoiceOptions = { method: 'POST', headers: invoiceHeaders };
+
+                  // Use same auth method as subscription check
+                  if (actualToken && actualToken !== 'oauth_session') {
+                    invoiceHeaders['Authorization'] = `Bearer ${actualToken}`;
+                  } else {
+                    invoiceOptions.credentials = 'include';
+                  }
+
+                  const invoiceResponse = await fetch(invoiceUrl, invoiceOptions);
+
+                  if (invoiceResponse.ok) {
+                    const invoiceResult = await invoiceResponse.json();
+                    console.log('✅ Invoice fetched and saved:', invoiceResult);
+                    if (invoiceResult.invoices_saved > 0) {
+                      toast.success(`Invoice saved successfully!`);
+                    } else if (invoiceResult.message) {
+                      console.log('ℹ️ Invoice result:', invoiceResult.message);
+                    }
+                  } else {
+                    const errorText = await invoiceResponse.text();
+                    console.warn('⚠️ Could not fetch invoice:', errorText);
+                  }
+                } catch (invoiceError) {
+                  console.error('❌ Error fetching invoice:', invoiceError);
+                  // Don't fail the whole flow if invoice fetch fails
+                }
+              };
+
+              // Fetch invoice immediately (no retry needed, subscription check already worked)
+              fetchInvoice();
+
               sessionStorage.removeItem('pending_subscription_id');
               sessionStorage.removeItem('last_payment_time');
 
@@ -455,7 +557,7 @@ const Converter = () => {
       } else {
         // Get the actual token (session_token for OAuth, JWT for regular auth)
         const authType = typeof window !== 'undefined' ? localStorage.getItem('auth_type') : null;
-        const actualToken = (authType === 'oauth' && token === 'oauth_session') 
+        const actualToken = (authType === 'oauth' && token === 'oauth_session')
           ? (typeof window !== 'undefined' ? localStorage.getItem('oauth_session_token') : null)
           : token;
 
