@@ -332,7 +332,7 @@ const Settings = () => {
         </div>
       </Card>
 
-      <Card className="p-6">
+      {/* <Card className="p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Billing Information</h3>
 
         <div className="space-y-4">
@@ -359,7 +359,7 @@ const Settings = () => {
             </Button>
           </div>
         </div>
-      </Card>
+      </Card> */}
 
       <Card className="p-6">
         <div className="flex items-center justify-between mb-4">
