@@ -155,7 +155,7 @@ const Results = ({ extractedData, excelFile, filename, onReset, pagesUsed = 0, i
         </h2>
         <p className="text-gray-600" data-testid="success-message">
           {isAnonymous
-            ? 'Your free bank statement conversion is complete!'
+            ? 'Your bank statement conversion is complete!'
             : 'Your bank statement has been successfully converted to Excel format'
           }
         </p>

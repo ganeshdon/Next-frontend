@@ -65,7 +65,7 @@ const Footer = () => {
               </li>
               <li>
                 <a 
-                  href="https://yourbankstatementconverter.com/blog" 
+                  href="https://yourbankstatementconverter.com/blog/" 
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-white transition-colors"
@@ -102,7 +102,7 @@ const Footer = () => {
         {/* Bottom Section - Legal Links */}
         <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col sm:flex-row justify-between items-center">
           <div className="text-gray-400 text-sm mb-4 sm:mb-0">
-            © 2024 Your Bank Statement Converter. All rights reserved.
+            © 2025 Your Bank Statement Converter. All rights reserved.
           </div>
           
           <div className="flex flex-wrap gap-6 text-sm text-gray-400">
