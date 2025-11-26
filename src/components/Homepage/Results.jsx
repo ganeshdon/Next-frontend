@@ -170,7 +170,7 @@ const Results = ({ extractedData, excelFile, filename, onReset, pagesUsed = 0, i
               <Button
                 onClick={() => router.push('/signup')}
                 size="sm"
-                className="bg-blue-600 hover:bg-blue-700"
+                className="bg-blue-600 text-white hover:bg-blue-700"
               >
                 Sign Up Free
               </Button>

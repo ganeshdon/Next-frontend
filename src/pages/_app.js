@@ -6,7 +6,7 @@ export default function App({ Component, pageProps }) {
   return (
     <AuthProvider>
       <Component {...pageProps} />
-      <Toaster position="top-right" richColors />
+      <Toaster position="top-right" richColors offset={{ top: 70 }} />
     </AuthProvider>
   );
 }
