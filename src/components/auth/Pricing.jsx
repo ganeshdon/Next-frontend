@@ -114,7 +114,7 @@ const Pricing = () => {
       price: { monthly: 15, annual: 12 },
       pages: 400,
       features: [
-        '400 pages / month'
+        '4 pages / month'
       ],
       buttonText: 'Buy',
       buttonVariant: 'default',
@@ -268,10 +268,14 @@ const Pricing = () => {
             const isCurrentPlan = user?.subscription_tier === plan.id &&
               user?.billing_interval === billingInterval;
 
+            // Allow plan selection if user has 0 pages remaining (even if it's current plan)
+            const hasNoPages = user?.pages_remaining <= 0;
+            const canSelectPlan = !isCurrentPlan || hasNoPages;
+
             return (
               <Card
                 key={plan.id}
-                className={`p-8 bg-white border-2 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 ${isCurrentPlan
+                className={`p-8 bg-white border-2 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 ${isCurrentPlan && !hasNoPages
                   ? 'border-blue-500 ring-2 ring-blue-200'
                   : 'border-gray-200 hover:border-blue-300'
                   }`}
@@ -292,18 +296,18 @@ const Pricing = () => {
 
                 <Button
                   onClick={() => handlePlanSelect(plan)}
-                  className={`w-full py-4 px-6 rounded-xl font-semibold text-base mb-8 transition-all duration-200 ${isCurrentPlan
+                  className={`w-full py-4 px-6 rounded-xl font-semibold text-base mb-8 transition-all duration-200 ${!canSelectPlan
                     ? 'bg-gray-100 text-gray-600 cursor-not-allowed'
                     : 'bg-linear-to-br from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-md hover:shadow-lg transform hover:scale-105'
                     }`}
-                  disabled={isCurrentPlan || loadingPlan === plan.id || checkingStatus}
+                  disabled={!canSelectPlan || loadingPlan === plan.id || checkingStatus}
                 >
                   {loadingPlan === plan.id ? (
                     <>
                       <Loader2 className="h-5 w-5 animate-spin mr-2 inline" />
                       Processing...
                     </>
-                  ) : isCurrentPlan ? 'Current Plan' : plan.buttonText}
+                  ) : isCurrentPlan && !hasNoPages ? 'Current Plan' : plan.buttonText}
                 </Button>
 
                 {plan.features.length > 0 && (

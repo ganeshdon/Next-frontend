@@ -282,7 +282,7 @@ const Settings = () => {
           <Button
             type="submit"
             disabled={loading}
-            className="bg-blue-600 hover:bg-blue-700"
+            className="bg-blue-600 text-white hover:bg-blue-700"
           >
             {loading ? 'Saving...' : 'Save Changes'}
           </Button>

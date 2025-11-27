@@ -836,12 +836,13 @@ const Converter = () => {
                 </div>
               ) : (
                 <div className="flex space-x-2">
-                  {user?.pages_remaining <= 2 && user?.subscription_tier === 'daily_free' && (
+                  {(user?.pages_remaining <= 0 || (user?.pages_remaining <= 2 && user?.subscription_tier === 'daily_free')) && user?.subscription_tier !== 'enterprise' && (
                     <Button
                       onClick={() => router.push('/pricing')}
-                      className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                      className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center"
                     >
-                      Upgrade
+                      <CreditCard className="h-4 w-4 mr-1" />
+                      Upgrade Plan
                     </Button>
                   )}
                   {/* <Button
@@ -870,6 +871,27 @@ const Converter = () => {
                 <p className="text-sm text-yellow-800">
                   Free conversion used. Sign up to get 7 more conversions daily!
                 </p>
+              </div>
+            )}
+
+            {!isAnonymous && user && user.pages_remaining <= 0 && user.subscription_tier !== 'enterprise' && (
+              <div className="mt-2 p-3 bg-red-50 rounded-lg border border-red-200">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-red-800">
+                      You've reached your page limit
+                    </p>
+                    <p className="text-xs text-red-600 mt-1">
+                      Upgrade your plan to continue converting bank statements
+                    </p>
+                  </div>
+                  <Button
+                    onClick={() => router.push('/pricing')}
+                    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors ml-3"
+                  >
+                    Upgrade Now
+                  </Button>
+                </div>
               </div>
             )}
           </Card>

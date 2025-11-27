@@ -37,10 +37,18 @@ const ForgotPassword = () => {
       const data = await response.json();
 
       if (response.ok) {
-        setEmailSent(true);
-        toast.success('If an account with that email exists, a password reset link has been sent.');
+        if (data.email_exists && data.email_sent) {
+          setEmailSent(true);
+          toast.success('Password reset link has been sent to your email!');
+        } else if (data.email_exists && data.is_oauth) {
+          toast.error('This account was created with social login. Please use the same method to sign in.');
+        } else if (data.email_exists && !data.email_sent) {
+          toast.error('Failed to send password reset email. Please try again later.');
+        } else {
+          toast.error('No account found with this email address.');
+        }
       } else {
-        toast.error(data.detail || 'Failed to send reset email. Please try again.');
+        toast.error(data.detail || data.message || 'Failed to send reset email. Please try again.');
       }
     } catch (error) {
       console.error('Forgot password error:', error);
