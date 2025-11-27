@@ -34,7 +34,7 @@ const Converter = () => {
     if (paymentSuccess === 'success' && !paymentHandledRef.current) {
       paymentHandledRef.current = true; // Mark as handled
 
-      console.log('🔍 Payment success detected');
+      console.log('🔍 Payment redirect detected (verifying status...)');
 
       // Get subscription_id from sessionStorage
       const subscriptionId = sessionStorage.getItem('pending_subscription_id');
@@ -42,8 +42,8 @@ const Converter = () => {
       console.log('🔐 Token available:', !!token);
       console.log('👤 Is authenticated:', isAuthenticated);
 
-      // Show success message
-      toast.success('🎉 Payment successful! Activating your subscription...');
+      // Show processing message while verifying payment status
+      toast.info('Verifying payment status...');
 
       // Function to check and update subscription status
       const checkSubscription = async () => {
@@ -114,6 +114,8 @@ const Converter = () => {
             console.log('✅ Subscription check result:', result);
 
             if (result.status === 'success') {
+              // Clear retry counter on success
+              sessionStorage.removeItem('subscription_check_retries');
               toast.success('🎉 Subscription activated! Your credits have been updated.');
 
               // Fetch and save invoice from Dodo API (with retry logic)
@@ -199,6 +201,20 @@ const Converter = () => {
                 }, 1500);
               }
             } else {
+              // Check if subscription is in a terminal state (failed, cancelled, etc.)
+              const terminalStates = ['failed', 'cancelled', 'expired', 'not_found'];
+              if (terminalStates.includes(result.status)) {
+                console.error('❌ Subscription is in terminal state:', result.status);
+                sessionStorage.removeItem('pending_subscription_id');
+                sessionStorage.removeItem('last_payment_time');
+                if (result.status === 'failed') {
+                  toast.error('Payment failed. Please try again or contact support.');
+                } else {
+                  toast.error(`Subscription ${result.status}. Please try again.`);
+                }
+                return; // Stop retrying
+              }
+
               console.warn('⚠️ Subscription not yet active:', result);
               toast.info('Processing your subscription... Please refresh in a few seconds.');
             }
@@ -352,6 +368,7 @@ const Converter = () => {
 
               sessionStorage.removeItem('pending_subscription_id');
               sessionStorage.removeItem('last_payment_time');
+              sessionStorage.removeItem('subscription_check_retries');
 
               toast.success('🎉 Subscription activated! Your credits have been updated.');
 
@@ -373,8 +390,36 @@ const Converter = () => {
                 }, 1500);
               }
             } else {
+              // Check if subscription is in a terminal state (failed, cancelled, etc.)
+              const terminalStates = ['failed', 'cancelled', 'expired', 'not_found'];
+              if (terminalStates.includes(result.status)) {
+                console.error('❌ Subscription is in terminal state:', result.status);
+                sessionStorage.removeItem('pending_subscription_id');
+                sessionStorage.removeItem('last_payment_time');
+                if (result.status === 'failed') {
+                  toast.error('Payment failed. Please try again or contact support.');
+                } else {
+                  toast.error(`Subscription ${result.status}. Please try again.`);
+                }
+                return; // Stop retrying
+              }
+
               console.log('⚠️ Subscription not yet active, will retry in 3 seconds...');
-              // Retry after 3 seconds if not yet active
+              // Retry after 3 seconds if not yet active (but limit retries)
+              const retryCount = parseInt(sessionStorage.getItem('subscription_check_retries') || '0');
+              const maxRetries = 20; // Stop after 20 retries (60 seconds)
+
+              if (retryCount >= maxRetries) {
+                console.error('❌ Max retries reached, stopping subscription check');
+                sessionStorage.removeItem('pending_subscription_id');
+                sessionStorage.removeItem('last_payment_time');
+                sessionStorage.removeItem('subscription_check_retries');
+                toast.error('Subscription check timed out. Please refresh the page.');
+                return;
+              }
+
+              sessionStorage.setItem('subscription_check_retries', String(retryCount + 1));
+
               setTimeout(() => {
                 if (sessionStorage.getItem('pending_subscription_id') === pendingSubscriptionId) {
                   checkPendingSubscription();

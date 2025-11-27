@@ -21,7 +21,8 @@ const Pricing = () => {
     const paymentSuccess = router.query.payment;
 
     if (paymentSuccess === 'success' && isAuthenticated && token) {
-      toast.success('Payment successful! Your subscription has been activated.');
+      // Don't show success message yet - wait for actual verification from subscription check
+      // toast.success('Payment successful! Your subscription has been activated.');
 
       // Get subscription_id from sessionStorage
       const subscriptionId = sessionStorage.getItem('pending_subscription_id');

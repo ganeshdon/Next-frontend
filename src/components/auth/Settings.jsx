@@ -307,7 +307,7 @@ const Settings = () => {
             {user?.subscription_tier === 'daily_free' && (
               <Button
                 onClick={() => router.push('/pricing')}
-                className="bg-green-600 hover:bg-green-700"
+                className="bg-green-600 hover:bg-green-700 text-white"
               >
                 Upgrade Plan
               </Button>
