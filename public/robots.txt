@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: 
+Sitemap: https://yourbankstatementconverter.com/sitemap.xml
+Sitemap: https://yourbankstatementconverter.com/blog/sitemap_index.xml
+
