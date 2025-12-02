@@ -1,11 +1,13 @@
 import React, { useState, useRef } from 'react';
-
+import { useRouter } from 'next/router';
+import { Upload, FileText, CheckCircle, Shield } from 'lucide-react';
 import Button from '@/components/ui/button';
 
 
 const FileUpload = ({ onFileUpload }) => {
   const [dragActive, setDragActive] = useState(false);
   const inputRef = useRef(null);
+  const router = useRouter();
 
   const handleDrag = (e) => {
     e.preventDefault();
@@ -39,28 +41,12 @@ const FileUpload = ({ onFileUpload }) => {
 
   return (
     <div className="space-y-8" data-testid="file-upload-component">
-      {/* Instructions */}
-      <div className="text-center space-y-4">
-        <div className="w-16 h-16 mx-auto bg-blue-100 rounded-full flex items-center justify-center mb-4">
-          <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-          </svg>
-        </div>
-        <h2 className="text-2xl font-semibold text-gray-900" data-testid="upload-title">
-          Upload Your Bank Statement
-        </h2>
-        <p className="text-gray-600 max-w-lg mx-auto" data-testid="upload-instructions">
-          Drag and drop your PDF bank statement here, or click to browse files. 
-          We support text-based PDF files up to 10MB.
-        </p>
-      </div>
-
-      {/* Upload Zone */}
+      {/* Upload Zone - Large Dashed Box */}
       <div
-        className={`border-2 border-dashed rounded-xl p-12 text-center transition-all duration-300
-          ${dragActive 
-            ? 'border-blue-500 bg-blue-50 scale-102' 
-            : 'border-gray-300 hover:border-gray-400 hover:bg-gray-50'
+        className={`border-2 border-dashed rounded-xl p-16 text-center transition-all duration-300 bg-gray-50
+          ${dragActive
+            ? 'border-blue-500 bg-blue-50'
+            : 'border-gray-300'
           }`}
         onDragEnter={handleDrag}
         onDragLeave={handleDrag}
@@ -76,57 +62,60 @@ const FileUpload = ({ onFileUpload }) => {
           onChange={handleChange}
           data-testid="file-input"
         />
-        
-        <div className="space-y-4">
-          <div className="w-12 h-12 mx-auto bg-gray-100 rounded-lg flex items-center justify-center">
-            <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
+
+        <div className="flex flex-col items-center justify-center space-y-6">
+          {/* Light Blue Circular Icon with Dark Blue Arrow */}
+          <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
+            <Upload className="w-8 h-8 text-blue-600" />
           </div>
-          
-          <div>
-            <p className="text-xl font-medium text-gray-900 mb-2" data-testid="drop-text">
-              {dragActive ? 'Drop your PDF here' : 'Drag & drop your PDF'}
-            </p>
-            <p className="text-gray-500" data-testid="or-text">or</p>
-          </div>
-          
-          <Button 
+
+          {/* Main Heading */}
+          <h2 className="text-3xl font-bold text-gray-800" data-testid="upload-title">
+            Drop Your Bank Statement Here
+          </h2>
+
+          {/* Description Text */}
+          <p className="text-base text-gray-500 max-w-lg" data-testid="upload-instructions">
+            Supports PDF, JPG, PNG, and scanned documents from all banks worldwide
+          </p>
+
+          {/* Choose File Button */}
+          <Button
             onClick={onButtonClick}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200 hover:shadow-lg"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200"
             data-testid="browse-button"
           >
-            Browse Files
+            Choose File
           </Button>
+
+          {/* Pages Free Daily Text */}
+          <p className="text-sm text-gray-700">
+            7 pages free daily.{' '}
+            <button
+              onClick={() => router.push('/pricing')}
+              className="text-blue-600  cursor-pointer hover:text-blue-700 underline"
+            >
+              View pricing
+            </button>
+          </p>
         </div>
       </div>
 
-      {/* Supported Formats */}
-      <div className="bg-gray-50 rounded-lg p-6" data-testid="format-info">
-        <h3 className="font-semibold text-gray-900 mb-3" data-testid="supported-formats-title">
-          Supported Formats
-        </h3>
-        <div className="grid md:grid-cols-2 gap-4 text-sm">
-          <div className="flex items-center space-x-3">
-            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-            <span className="text-gray-700">Text-based PDF files</span>
-          </div>
-          <div className="flex items-center space-x-3">
-            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-            <span className="text-gray-700">Standard bank statement formats</span>
-          </div>
-          <div className="flex items-center space-x-3">
-            <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-            <span className="text-gray-700">Scanned/image PDFs (not supported)</span>
-          </div>
-          <div className="flex items-center space-x-3">
-            <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-            <span className="text-gray-700">Password-protected PDFs</span>
-          </div>
+      {/* Feature Highlights */}
+      <div className="flex items-center justify-center space-x-8 pt-4" data-testid="format-info">
+        <div className="flex items-center space-x-2">
+          <FileText className="w-5 h-5 text-gray-600" />
+          <span className="text-sm text-gray-700">PDF, JPG, PNG</span>
+        </div>
+        <div className="flex items-center space-x-2">
+          <CheckCircle className="w-5 h-5 text-green-600" />
+          <span className="text-sm text-gray-700">No watermarks</span>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Shield className="w-5 h-5 text-gray-600" />
+          <span className="text-sm text-gray-700">Bank-grade security</span>
         </div>
       </div>
-
-      {/* Sample format section removed */}
     </div>
   );
 };

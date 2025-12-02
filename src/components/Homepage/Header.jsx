@@ -37,25 +37,46 @@ const Header = () => {
     <>
       <Link
         href="/"
-        className={`font-medium transition-colors ${pathname === '/' ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600'}`}
+        className={`relative px-3 py-2 font-semibold text-sm transition-all duration-200 ${pathname === '/'
+          ? 'text-blue-600'
+          : 'text-gray-700 hover:text-blue-600'
+          }`}
       >
         Home
+        {pathname === '/' && (
+          <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-full"></span>
+        )}
       </Link>
       <Link
         href="/pricing"
-        className={`font-medium transition-colors ${pathname?.startsWith('/pricing') ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600'}`}
+        className={`relative px-3 py-2 font-semibold text-sm transition-all duration-200 ${pathname?.startsWith('/pricing')
+          ? 'text-blue-600'
+          : 'text-gray-700 hover:text-blue-600'
+          }`}
       >
         Pricing
+        {pathname?.startsWith('/pricing') && (
+          <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-full"></span>
+        )}
       </Link>
       <Link
         href="/login"
-        className={`font-medium transition-colors ${pathname === '/login' ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600'}`}
+        className={`relative px-3 py-2 font-semibold text-sm transition-all duration-200 ${pathname === '/login'
+          ? 'text-blue-600'
+          : 'text-gray-700 hover:text-blue-600'
+          }`}
       >
         Login
+        {pathname === '/login' && (
+          <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-full"></span>
+        )}
       </Link>
       <Link
         href="/signup"
-        className={`px-4 py-2 rounded-lg transition-colors ${pathname === '/signup' ? 'bg-blue-700 text-white' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
+        className={`ml-2 px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200 shadow-md hover:shadow-lg ${pathname === '/signup'
+          ? 'bg-blue-700 text-white shadow-blue-500/50'
+          : 'bg-blue-600 text-white hover:bg-blue-700'
+          }`}
       >
         Register
       </Link>
@@ -66,29 +87,49 @@ const Header = () => {
     <>
       <Link
         href="/"
-        className={`font-medium transition-colors ${pathname === '/' ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600'}`}
+        className={`relative px-3 py-2 font-semibold text-sm transition-all duration-200 ${pathname === '/'
+          ? 'text-blue-600'
+          : 'text-gray-700 hover:text-blue-600'
+          }`}
       >
         Home
+        {pathname === '/' && (
+          <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-full"></span>
+        )}
       </Link>
 
       <Link
         href="/pricing"
-        className={`font-medium transition-colors ${pathname?.startsWith('/pricing') ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600'}`}
+        className={`relative px-3 py-2 font-semibold text-sm transition-all duration-200 ${pathname?.startsWith('/pricing')
+          ? 'text-blue-600'
+          : 'text-gray-700 hover:text-blue-600'
+          }`}
       >
         Pricing
+        {pathname?.startsWith('/pricing') && (
+          <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-full"></span>
+        )}
       </Link>
 
-      <div className={`flex items-center space-x-2 cursor-pointer ${pathname?.startsWith('/settings') ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600'}`}
-        onClick={() => router.push('/settings')}>
+      <div
+        className={`flex items-center space-x-2 px-3 py-2 rounded-lg cursor-pointer transition-all duration-200 ${pathname?.startsWith('/settings')
+          ? 'text-blue-600 bg-blue-50'
+          : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
+          }`}
+        onClick={() => router.push('/settings')}
+      >
         <CreditCard className="h-4 w-4" />
-        <span className="font-medium">
+        <span className="font-semibold text-sm">
           Pages ({formatPagesRemaining()})
         </span>
       </div>
 
       <Link
         href="/documents"
-        className={`flex items-center space-x-2 font-medium transition-colors ${pathname?.startsWith('/documents') ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600'}`}
+        className={`flex items-center space-x-2 px-3 py-2 rounded-lg font-semibold text-sm transition-all duration-200 ${pathname?.startsWith('/documents')
+          ? 'text-blue-600 bg-blue-50'
+          : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
+          }`}
       >
         <FileText className="h-4 w-4" />
         <span>Documents</span>
@@ -96,7 +137,10 @@ const Header = () => {
 
       <Link
         href="/settings"
-        className={`flex items-center space-x-2 font-medium transition-colors ${pathname?.startsWith('/settings') ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600'}`}
+        className={`flex items-center space-x-2 px-3 py-2 rounded-lg font-semibold text-sm transition-all duration-200 ${pathname?.startsWith('/settings')
+          ? 'text-blue-600 bg-blue-50'
+          : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
+          }`}
       >
         <Settings className="h-4 w-4" />
         <span>Settings</span>
@@ -104,7 +148,7 @@ const Header = () => {
 
       <button
         onClick={handleLogout}
-        className="flex items-center space-x-2 text-gray-700 hover:text-red-600 font-medium transition-colors"
+        className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-700 hover:text-red-600 hover:bg-red-50 font-semibold text-sm transition-all duration-200"
       >
         <LogOut className="h-4 w-4" />
         <span>Sign out</span>
@@ -112,39 +156,47 @@ const Header = () => {
     </>
   );
 
-  // Language dropdown removed
-
   return (
-    <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-40">
+    <header className="bg-white/95 backdrop-blur-md shadow-md border-b border-gray-200/50 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3">
-            <img
-              src="/logo.png"
-              alt="Your Bank Statement Converter"
-              className="h-10 w-10 object-contain"
-            />
-            <span className="text-xl font-bold text-gray-900 hidden sm:block">
-              Your Bank Statement Converter
-            </span>
-            <span className="text-lg font-bold text-gray-900 sm:hidden">
-              YBSC
-            </span>
+          <Link href="/" className="flex items-center space-x-3 group">
+            <div className="relative">
+              <div className="absolute inset-0 bg-blue-100 rounded-xl blur-lg opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
+              <img
+                src="/logo.png"
+                alt="Your Bank Statement Converter"
+                className="h-12 w-12 object-contain relative z-10 transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent hidden sm:block">
+                Your Bank Statement Converter
+              </span>
+              <span className="text-lg font-bold text-gray-900 sm:hidden">
+                YBSC
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6">
+          <nav className="hidden md:flex items-center space-x-1">
             {isAuthenticated ? <AuthenticatedNav /> : <PublicNav />}
-          </div>
+          </nav>
 
           {/* Mobile menu button */}
           <div className="md:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-gray-700 hover:text-blue-600 transition-colors"
+              className="p-2 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-gray-100 transition-all duration-200"
+              aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {mobileMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
             </button>
           </div>
         </div>
@@ -152,77 +204,81 @@ const Header = () => {
 
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
-        <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
+        <div className="md:hidden border-t border-gray-200 bg-white/98 backdrop-blur-md">
+          <div className="px-4 pt-4 pb-6 space-y-2">
             {isAuthenticated ? (
               <>
                 <Link
                   href="/"
-                  className="block px-3 py-2 text-gray-700 hover:text-blue-600 font-medium"
+                  className="flex items-center px-4 py-3 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-semibold transition-all duration-200"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Home
+                  <span className={pathname === '/' ? 'text-blue-600' : ''}>Home</span>
                 </Link>
                 <Link
                   href="/pricing"
-                  className="block px-3 py-2 text-gray-700 hover:text-blue-600 font-medium"
+                  className="flex items-center px-4 py-3 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-semibold transition-all duration-200"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Pricing
+                  <span className={pathname?.startsWith('/pricing') ? 'text-blue-600' : ''}>Pricing</span>
                 </Link>
                 <div
-                  className="block px-3 py-2 text-gray-700 hover:text-blue-600 font-medium cursor-pointer"
+                  className="flex items-center px-4 py-3 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-semibold cursor-pointer transition-all duration-200"
                   onClick={() => { router.push('/settings'); setMobileMenuOpen(false); }}
                 >
-                  Pages ({formatPagesRemaining()})
+                  <CreditCard className="h-4 w-4 mr-2" />
+                  <span>Pages ({formatPagesRemaining()})</span>
                 </div>
                 <Link
                   href="/documents"
-                  className="block px-3 py-2 text-gray-700 hover:text-blue-600 font-medium"
+                  className="flex items-center px-4 py-3 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-semibold transition-all duration-200"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Documents
+                  <FileText className="h-4 w-4 mr-2" />
+                  <span className={pathname?.startsWith('/documents') ? 'text-blue-600' : ''}>Documents</span>
                 </Link>
                 <Link
                   href="/settings"
-                  className="block px-3 py-2 text-gray-700 hover:text-blue-600 font-medium"
+                  className="flex items-center px-4 py-3 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-semibold transition-all duration-200"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Settings
+                  <Settings className="h-4 w-4 mr-2" />
+                  <span className={pathname?.startsWith('/settings') ? 'text-blue-600' : ''}>Settings</span>
                 </Link>
                 <button
                   onClick={() => { handleLogout(); setMobileMenuOpen(false); }}
-                  className="block w-full text-left px-3 py-2 text-gray-700 hover:text-red-600 font-medium"
+                  className="flex items-center w-full text-left px-4 py-3 rounded-lg text-gray-700 hover:text-red-600 hover:bg-red-50 font-semibold transition-all duration-200"
                 >
-                  Sign out
+                  <LogOut className="h-4 w-4 mr-2" />
+                  <span>Sign out</span>
                 </button>
               </>
             ) : (
               <>
                 <Link
                   href="/"
-                  className="block px-3 py-2 text-gray-700 hover:text-blue-600 font-medium"
+                  className="flex items-center px-4 py-3 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-semibold transition-all duration-200"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Home
+                  <span className={pathname === '/' ? 'text-blue-600' : ''}>Home</span>
                 </Link>
                 <Link
                   href="/pricing"
-                  className="block px-3 py-2 text-gray-700 hover:text-blue-600 font-medium"
+                  className="flex items-center px-4 py-3 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-semibold transition-all duration-200"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Pricing
+                  <span className={pathname?.startsWith('/pricing') ? 'text-blue-600' : ''}>Pricing</span>
                 </Link>
                 <Link
                   href="/login"
-                  className="block px-3 py-2 text-blue-600 hover:text-blue-700 font-medium"
+                  className="flex items-center px-4 py-3 rounded-lg text-blue-600 hover:text-blue-700 hover:bg-blue-50 font-semibold transition-all duration-200"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Login
+                  <span>Login</span>
                 </Link>
                 <Link
                   href="/signup"
-                  className="block px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 mx-3"
+                  className="flex items-center justify-center px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold shadow-md hover:shadow-lg transition-all duration-200 mx-4 mt-2"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Register

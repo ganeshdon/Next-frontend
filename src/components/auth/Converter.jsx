@@ -10,6 +10,11 @@ import Card from '@/components/ui/card';
 import { useRouter } from 'next/router';
 import { getBrowserFingerprint } from '@/utils/fingerprint';
 import API from '@/utils/api';
+import Hero from '@/components/Homepage/Landing/Hero';
+import ContentSection from '@/components/Homepage/Landing/ContentSection';
+import UseCases from '@/components/Homepage/Landing/UseCases';
+import SocialProof from '@/components/Homepage/Landing/SocialProof';
+import FAQ from '@/components/Homepage/Landing/FAQ';
 
 const Converter = () => {
   const [currentStep, setCurrentStep] = useState('upload');
@@ -475,6 +480,18 @@ const Converter = () => {
     initFingerprint();
   }, [isAuthenticated]);
 
+  // Handle scroll to converter card when page loads with hash
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.hash === '#converter-card') {
+      setTimeout(() => {
+        const element = document.getElementById('converter-card');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 300); // Wait a bit for page to fully render
+    }
+  }, []);
+
   // Check anonymous conversion limit
   const checkAnonymousLimit = async (fingerprint) => {
     try {
@@ -847,140 +864,58 @@ const Converter = () => {
 
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-50 via-blue-50 to-indigo-100">
-      <div className="container mx-auto px-4 py-8">
-        {/* Header with user info */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Your Bank Statement Converter
-          </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-6">
-            Convert your PDF bank statements into organized spreadsheets
-          </p>
+      <div className="container mx-auto">
 
-          {/* Usage Status */}
-          <Card className="max-w-xl mx-auto p-4 mb-6">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                {isAnonymous ? (
-                  <Gift className="h-5 w-5 text-green-600" />
-                ) : (
-                  <CreditCard className="h-5 w-5 text-blue-600" />
-                )}
-                <span className="font-medium text-gray-900">{formatPagesDisplay()}</span>
-              </div>
 
-              {isAnonymous ? (
-                <div className="flex space-x-2">
-                  <Button
-                    onClick={() => router.push('/signup')}
-                    className="bg-blue-600 hover:bg-blue-700 cursor-pointer text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center"
-                  >
-                    <UserPlus className="h-4 w-4 mr-1" />
-                    Sign Up Free
-                  </Button>
+
+        <Hero />
+
+
+
+        <div className="w-full bg-white py-12">
+          <div className="flex justify-center mb-8">
+            <div className="flex items-center space-x-4">
+              <div className={`flex items-center ${currentStep === 'upload' ? 'text-blue-600' : currentStep === 'processing' || currentStep === 'results' ? 'text-green-600' : 'text-gray-400'}`}>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-medium ${currentStep === 'upload' ? 'bg-blue-600' : currentStep === 'processing' || currentStep === 'results' ? 'bg-green-600' : 'bg-gray-300'}`}>
+                  1
                 </div>
-              ) : (
-                <div className="flex space-x-2">
-                  {(user?.pages_remaining <= 0 || (user?.pages_remaining <= 2 && user?.subscription_tier === 'daily_free')) && user?.subscription_tier !== 'enterprise' && (
-                    <Button
-                      onClick={() => router.push('/pricing')}
-                      className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center"
-                    >
-                      <CreditCard className="h-4 w-4 mr-1" />
-                      Upgrade Plan
-                    </Button>
-                  )}
-                  {/* <Button
-                    onClick={async () => {
-                      if (refreshUser) {
-                        toast.info('Refreshing your account...');
-                        const updatedUser = await refreshUser();
-                        if (updatedUser) {
-                          toast.success(`You have ${updatedUser.pages_remaining} pages remaining.`);
-                        }
-                      }
-                    }}
-                    className="bg-gray-600 hover:bg-gray-700 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors"
-                    title="Refresh credits"
-                  >
-                    Professional
-                  </Button> */}
+                <span className="ml-2 font-medium">Upload PDF</span>
+              </div>
+              <div className="w-8 h-0.5 bg-gray-300"></div>
+              <div className={`flex items-center ${currentStep === 'processing' ? 'text-blue-600' : currentStep === 'results' ? 'text-green-600' : 'text-gray-400'}`}>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-medium ${currentStep === 'processing' ? 'bg-blue-600' : currentStep === 'results' ? 'bg-green-600' : 'bg-gray-300'}`}>
+                  2
                 </div>
-              )}
-            </div>
-
-            <p className="text-sm text-gray-500 mt-1">{getResetMessage()}</p>
-
-            {isAnonymous && !anonymousData?.can_convert && (
-              <div className="mt-2 p-2 bg-yellow-50 rounded-lg border border-yellow-200">
-                <p className="text-sm text-yellow-800">
-                  Free conversion used. Sign up to get 7 more conversions daily!
-                </p>
+                <span className="ml-2 font-medium">Processing</span>
               </div>
-            )}
-
-            {!isAnonymous && user && user.pages_remaining <= 0 && user.subscription_tier !== 'enterprise' && (
-              <div className="mt-2 p-3 bg-red-50 rounded-lg border border-red-200">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-red-800">
-                      You've reached your page limit
-                    </p>
-                    <p className="text-xs text-red-600 mt-1">
-                      Upgrade your plan to continue converting bank statements
-                    </p>
-                  </div>
-                  <Button
-                    onClick={() => router.push('/pricing')}
-                    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors ml-3"
-                  >
-                    Upgrade Now
-                  </Button>
+              <div className="w-8 h-0.5 bg-gray-300"></div>
+              <div className={`flex items-center ${currentStep === 'results' ? 'text-green-600' : 'text-gray-400'}`}>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-medium ${currentStep === 'results' ? 'bg-green-600' : 'bg-gray-300'}`}>
+                  3
                 </div>
+                <span className="ml-2 font-medium">Download</span>
               </div>
-            )}
-          </Card>
-        </div>
-
-        {/* Process Steps Indicator */}
-        <div className="flex justify-center mb-8">
-          <div className="flex items-center space-x-4">
-            <div className={`flex items-center ${currentStep === 'upload' ? 'text-blue-600' : currentStep === 'processing' || currentStep === 'results' ? 'text-green-600' : 'text-gray-400'}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-medium ${currentStep === 'upload' ? 'bg-blue-600' : currentStep === 'processing' || currentStep === 'results' ? 'bg-green-600' : 'bg-gray-300'}`}>
-                1
-              </div>
-              <span className="ml-2 font-medium">Upload PDF</span>
             </div>
-            <div className="w-8 h-0.5 bg-gray-300"></div>
-            <div className={`flex items-center ${currentStep === 'processing' ? 'text-blue-600' : currentStep === 'results' ? 'text-green-600' : 'text-gray-400'}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-medium ${currentStep === 'processing' ? 'bg-blue-600' : currentStep === 'results' ? 'bg-green-600' : 'bg-gray-300'}`}>
-                2
-              </div>
-              <span className="ml-2 font-medium">Processing</span>
-            </div>
-            <div className="w-8 h-0.5 bg-gray-300"></div>
-            <div className={`flex items-center ${currentStep === 'results' ? 'text-green-600' : 'text-gray-400'}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-medium ${currentStep === 'results' ? 'bg-green-600' : 'bg-gray-300'}`}>
-                3
-              </div>
-              <span className="ml-2 font-medium">Download</span>
-            </div>
+          </div>
+          <div id="converter-card" className="max-w-3xl mx-auto px-4">
+            <Card className="p-8">
+              {renderCurrentStep()}
+            </Card>
           </div>
         </div>
 
-        {/* Main Content */}
-        <div className="max-w-3xl mx-auto">
-          <Card className="bg-white rounded-2xl shadow-xl p-8">
-            {renderCurrentStep()}
-          </Card>
-        </div>
+        <ContentSection />
+        <UseCases />
+        <SocialProof />
+        <FAQ />
 
-        {/* Privacy Notice */}
-        <div className="text-center mt-8">
-          <p className="text-sm text-gray-500 max-w-xl mx-auto">
+        <div className="text-center  bg-slate-50">
+          <p className="text-sm text-gray-600 mb-3 max-w-xl mx-auto">
             🔒 Your files are processed securely and never permanently stored
           </p>
         </div>
+
+
       </div>
     </div>
   );

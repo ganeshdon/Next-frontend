@@ -219,11 +219,11 @@ const Pricing = () => {
   // Removed unused data arrays
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-slate-50 via-blue-50 to-indigo-100 py-16">
+    <div className="min-h-screen bg-gray-50 py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Payment Status Check */}
         {checkingStatus && (
-          <Card className="max-w-md mx-auto p-5 mb-8 bg-linear-to-br from-blue-50 to-indigo-50 border-blue-200 shadow-md rounded-xl">
+          <Card className="max-w-md mx-auto p-5 mb-8 bg-blue-50 border-blue-200 shadow-md rounded-xl">
             <div className="flex items-center justify-center space-x-3">
               <Loader2 className="h-5 w-5 animate-spin text-blue-600" />
               <span className="text-blue-800 font-semibold">Checking payment status...</span>
@@ -231,13 +231,28 @@ const Pricing = () => {
           </Card>
         )}
 
+        {/* Header Section */}
+        <div className="text-center mb-12">
+          {/* <div className="inline-block mb-4">
+            <span className="px-3 py-1 bg-green-100 text-green-700 rounded text-xs font-semibold">
+              Plans
+            </span>
+          </div> */}
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            Your Bank Statement Converter Pricing
+          </h1>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Experience the convenience of having everything you need in one place, enhancing your digital interactions effortlessly.
+          </p>
+        </div>
+
         {/* Billing Toggle */}
-        <div className="flex items-center justify-center mb-16">
-          <div className="relative inline-flex items-center bg-white rounded-xl p-1.5 shadow-lg border border-gray-200">
+        <div className="flex items-center justify-center mb-12">
+          <div className="relative inline-flex items-center bg-white rounded-full p-1 shadow-md border border-gray-200">
             <button
               onClick={() => setBillingInterval('monthly')}
-              className={`relative px-8 py-3 rounded-lg font-semibold text-sm transition-all duration-300 ${billingInterval === 'monthly'
-                ? 'bg-linear-to-br from-blue-600 to-blue-700 text-white shadow-md transform scale-105'
+              className={`relative px-8 py-2.5 rounded-full font-semibold text-sm transition-all duration-300 ${billingInterval === 'monthly'
+                ? 'bg-blue-500 text-white shadow-sm'
                 : 'text-gray-600 hover:text-gray-900'
                 }`}
               disabled={checkingStatus}
@@ -246,13 +261,13 @@ const Pricing = () => {
             </button>
             <button
               onClick={() => setBillingInterval('annual')}
-              className={`relative px-8 py-3 rounded-lg font-semibold text-sm transition-all duration-300 ${billingInterval === 'annual'
-                ? 'bg-linear-to-br from-blue-600 to-blue-700 text-white shadow-md transform scale-105'
+              className={`relative px-8 py-2.5 rounded-full font-semibold text-sm transition-all duration-300 ${billingInterval === 'annual'
+                ? 'bg-blue-500 text-white shadow-sm'
                 : 'text-gray-600 hover:text-gray-900'
                 }`}
               disabled={checkingStatus}
             >
-              Annual
+              Annually
             </button>
           </div>
           {billingInterval === 'annual' && (
@@ -263,8 +278,8 @@ const Pricing = () => {
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-          {plans.map((plan) => {
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+          {plans.map((plan, index) => {
             // Check if this is the current plan - must match both tier AND billing interval
             const isCurrentPlan = user?.subscription_tier === plan.id &&
               user?.billing_interval === billingInterval;
@@ -272,60 +287,105 @@ const Pricing = () => {
             // Allow plan selection if user has 0 pages remaining (even if it's current plan)
             const hasNoPages = user?.pages_remaining <= 0;
             const canSelectPlan = !isCurrentPlan || hasNoPages;
+            const isPopular = index === 1; // Mark Professional as popular
+
+            // Determine card background and checkmark colors (design only)
+            const cardBg = isPopular ? 'bg-purple-50' : 'bg-white';
+            const checkmarkColor = isPopular ? 'bg-purple-500' : 'bg-blue-500';
 
             return (
-              <Card
-                key={plan.id}
-                className={`p-8 bg-white border-2 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 ${isCurrentPlan && !hasNoPages
-                  ? 'border-blue-500 ring-2 ring-blue-200'
-                  : 'border-gray-200 hover:border-blue-300'
-                  }`}
-              >
-                <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3">{plan.name}</h3>
-                  <div className="mb-6">
-                    <div className="flex items-baseline justify-center">
-                      <span className="text-5xl font-bold text-gray-900">
-                        {formatPrice(plan)}
-                      </span>
-                      {typeof plan.price[billingInterval] === 'number' && (
-                        <span className="text-lg text-gray-600 ml-2">/month</span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                <Button
-                  onClick={() => handlePlanSelect(plan)}
-                  className={`w-full py-4 px-6 rounded-xl font-semibold text-base mb-8 transition-all duration-200 ${!canSelectPlan
-                    ? 'bg-gray-100 text-gray-600 cursor-not-allowed'
-                    : 'bg-linear-to-br from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-md hover:shadow-lg transform hover:scale-105'
-                    }`}
-                  disabled={!canSelectPlan || loadingPlan === plan.id || checkingStatus}
-                >
-                  {loadingPlan === plan.id ? (
-                    <>
-                      <Loader2 className="h-5 w-5 animate-spin mr-2 inline" />
-                      Processing...
-                    </>
-                  ) : isCurrentPlan && !hasNoPages ? 'Current Plan' : plan.buttonText}
-                </Button>
-
-                {plan.features.length > 0 && (
-                  <div className="border-t border-gray-200 pt-6">
-                    <ul className="space-y-4">
-                      {plan.features.map((feature, index) => (
-                        <li key={index} className="flex items-center text-sm text-gray-700">
-                          <div className="w-5 h-5 rounded-full bg-linear-to-br from-green-400 to-green-600 flex items-center justify-center mr-3 shrink-0">
-                            <Check className="h-3 w-3 text-white" />
-                          </div>
-                          <span className="font-medium">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
+              <div key={plan.id} className="relative">
+                {isPopular && (
+                  <div className="absolute -top-3 right-4 z-10">
+                    <span className="bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+                      Popular
+                    </span>
                   </div>
                 )}
-              </Card>
+                <Card
+                  className={`p-8 ${cardBg} border-2 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 h-full flex flex-col ${isCurrentPlan && !hasNoPages
+                    ? 'border-blue-500 ring-2 ring-blue-200'
+                    : 'border-gray-200 hover:border-blue-300'
+                    }`}
+                >
+                  <div className="text-center mb-8">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-3">{plan.name}</h3>
+                    <div className="mb-6">
+                      <div className="flex items-baseline justify-center">
+                        <span className="text-5xl font-bold text-gray-900">
+                          {formatPrice(plan)}
+                        </span>
+                        {typeof plan.price[billingInterval] === 'number' && (
+                          <span className="text-lg text-gray-600 ml-2">/month</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <Button
+                    onClick={() => handlePlanSelect(plan)}
+                    className={`w-full py-4 px-6 rounded-xl font-semibold text-base mb-8 transition-all duration-200 ${!canSelectPlan
+                      ? 'bg-gray-100 text-gray-600 cursor-not-allowed'
+                      : isPopular
+                        ? 'bg-white text-purple-600 border-2 border-purple-200 hover:bg-purple-50'
+                        : 'bg-gray-900 text-white hover:bg-gray-800'
+                      }`}
+                    disabled={!canSelectPlan || loadingPlan === plan.id || checkingStatus}
+                  >
+                    {loadingPlan === plan.id ? (
+                      <>
+                        <Loader2 className="h-5 w-5 animate-spin mr-2 inline" />
+                        Processing...
+                      </>
+                    ) : isCurrentPlan && !hasNoPages ? 'Current Plan' : plan.buttonText}
+                  </Button>
+
+                  {plan.features.length > 0 && (
+                    <div className="border-t border-gray-200 pt-6">
+                      <ul className="space-y-4">
+                        {plan.features.map((feature, featureIndex) => (
+                          <li key={featureIndex} className="flex items-center text-sm text-gray-700">
+                            <div className={`w-5 h-5 rounded-full ${checkmarkColor} flex items-center justify-center mr-3 shrink-0`}>
+                              <Check className="h-3 w-3 text-white" />
+                            </div>
+                            <span className="font-medium">{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {plan.id === 'enterprise' && (
+                    <div className="border-t border-gray-200 pt-6">
+                      <ul className="space-y-4 text-sm text-gray-700">
+                        <li className="flex items-center">
+                          <div className={`w-5 h-5 rounded-full ${checkmarkColor} flex items-center justify-center mr-3 shrink-0`}>
+                            <Check className="h-3 w-3 text-white" />
+                          </div>
+                          <span className="font-semibold">Unlimited pages</span>
+                        </li>
+                        <li className="flex items-center">
+                          <div className={`w-5 h-5 rounded-full ${checkmarkColor} flex items-center justify-center mr-3 shrink-0`}>
+                            <Check className="h-3 w-3 text-white" />
+                          </div>
+                          <span className="font-semibold">Priority support</span>
+                        </li>
+                        <li className="flex items-center">
+                          <div className={`w-5 h-5 rounded-full ${checkmarkColor} flex items-center justify-center mr-3 shrink-0`}>
+                            <Check className="h-3 w-3 text-white" />
+                          </div>
+                          <span className="font-semibold">Custom integrations</span>
+                        </li>
+                        <li className="flex items-center">
+                          <div className={`w-5 h-5 rounded-full ${checkmarkColor} flex items-center justify-center mr-3 shrink-0`}>
+                            <Check className="h-3 w-3 text-white" />
+                          </div>
+                          <span className="font-semibold">Dedicated account manager</span>
+                        </li>
+                      </ul>
+                    </div>
+                  )}
+                </Card>
+              </div>
             );
           })}
         </div>
