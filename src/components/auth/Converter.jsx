@@ -823,16 +823,16 @@ const Converter = () => {
         );
       case 'error':
         return (
-          <div className="text-center py-12" data-testid="error-state">
-            <div className="mx-auto w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
-              <AlertTriangle className="w-8 h-8 text-red-600" />
+          <div className="text-center py-8 sm:py-12 px-2 sm:px-0" data-testid="error-state">
+            <div className="mx-auto w-12 h-12 sm:w-16 sm:h-16 bg-red-100 rounded-full flex items-center justify-center mb-3 sm:mb-4">
+              <AlertTriangle className="w-6 h-6 sm:w-8 sm:h-8 text-red-600" />
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2" data-testid="error-title">Processing Failed</h3>
-            <p className="text-gray-600 mb-6" data-testid="error-message">{error}</p>
-            <div className="space-y-2">
+            <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2" data-testid="error-title">Processing Failed</h3>
+            <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 px-2 sm:px-0" data-testid="error-message">{error}</p>
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-0 justify-center items-center">
               <Button
                 onClick={handleReset}
-                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                className="bg-blue-600 text-white px-5 sm:px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm sm:text-base w-full sm:w-auto"
                 data-testid="try-again-btn"
               >
                 Try Another File
@@ -840,7 +840,7 @@ const Converter = () => {
               {error?.includes('Insufficient pages') && (
                 <Button
                   onClick={() => router.push('/pricing')}
-                  className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors ml-3"
+                  className="bg-green-600 text-white px-5 sm:px-6 py-2 rounded-lg hover:bg-green-700 transition-colors text-sm sm:text-base w-full sm:w-auto sm:ml-3"
                 >
                   Upgrade Plan
                 </Button>
@@ -857,7 +857,7 @@ const Converter = () => {
   if (!isAnonymous && !user && isAuthenticated) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-16 w-16 sm:h-24 sm:w-24 md:h-32 md:w-32 border-b-2 border-blue-600"></div>
       </div>
     );
   }
@@ -872,33 +872,33 @@ const Converter = () => {
 
 
 
-        <div className="w-full bg-white py-12">
-          <div className="flex justify-center mb-8">
-            <div className="flex items-center space-x-4">
+        <div className="w-full bg-white py-8 sm:py-10 md:py-12">
+          <div className="flex justify-center mb-6 sm:mb-8 px-2 sm:px-0">
+            <div className="flex items-center space-x-2 sm:space-x-4">
               <div className={`flex items-center ${currentStep === 'upload' ? 'text-blue-600' : currentStep === 'processing' || currentStep === 'results' ? 'text-green-600' : 'text-gray-400'}`}>
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-medium ${currentStep === 'upload' ? 'bg-blue-600' : currentStep === 'processing' || currentStep === 'results' ? 'bg-green-600' : 'bg-gray-300'}`}>
+                <div className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-white text-xs sm:text-sm font-medium ${currentStep === 'upload' ? 'bg-blue-600' : currentStep === 'processing' || currentStep === 'results' ? 'bg-green-600' : 'bg-gray-300'}`}>
                   1
                 </div>
-                <span className="ml-2 font-medium">Upload PDF</span>
+                <span className="ml-1 sm:ml-2 font-medium text-xs sm:text-sm">Upload PDF</span>
               </div>
-              <div className="w-8 h-0.5 bg-gray-300"></div>
+              <div className="w-4 sm:w-8 h-0.5 bg-gray-300"></div>
               <div className={`flex items-center ${currentStep === 'processing' ? 'text-blue-600' : currentStep === 'results' ? 'text-green-600' : 'text-gray-400'}`}>
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-medium ${currentStep === 'processing' ? 'bg-blue-600' : currentStep === 'results' ? 'bg-green-600' : 'bg-gray-300'}`}>
+                <div className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-white text-xs sm:text-sm font-medium ${currentStep === 'processing' ? 'bg-blue-600' : currentStep === 'results' ? 'bg-green-600' : 'bg-gray-300'}`}>
                   2
                 </div>
-                <span className="ml-2 font-medium">Processing</span>
+                <span className="ml-1 sm:ml-2 font-medium text-xs sm:text-sm">Processing</span>
               </div>
-              <div className="w-8 h-0.5 bg-gray-300"></div>
+              <div className="w-4 sm:w-8 h-0.5 bg-gray-300"></div>
               <div className={`flex items-center ${currentStep === 'results' ? 'text-green-600' : 'text-gray-400'}`}>
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-medium ${currentStep === 'results' ? 'bg-green-600' : 'bg-gray-300'}`}>
+                <div className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-white text-xs sm:text-sm font-medium ${currentStep === 'results' ? 'bg-green-600' : 'bg-gray-300'}`}>
                   3
                 </div>
-                <span className="ml-2 font-medium">Download</span>
+                <span className="ml-1 sm:ml-2 font-medium text-xs sm:text-sm">Download</span>
               </div>
             </div>
           </div>
-          <div id="converter-card" className="max-w-3xl mx-auto px-4">
-            <Card className="p-8">
+          <div id="converter-card" className="max-w-3xl mx-auto px-2 sm:px-4">
+            <Card className="p-4 sm:p-6 md:p-8">
               {renderCurrentStep()}
             </Card>
           </div>
@@ -909,8 +909,8 @@ const Converter = () => {
         <SocialProof />
         <FAQ />
 
-        <div className="text-center  bg-slate-50">
-          <p className="text-sm text-gray-600 mb-3 max-w-xl mx-auto">
+        <div className="text-center bg-slate-50 py-4 sm:py-6">
+          <p className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3 max-w-xl mx-auto px-2 sm:px-0">
             🔒 Your files are processed securely and never permanently stored
           </p>
         </div>

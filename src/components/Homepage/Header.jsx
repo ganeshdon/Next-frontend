@@ -59,6 +59,14 @@ const Header = () => {
           <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-full"></span>
         )}
       </Link>
+      <a
+        href="https://yourbankstatementconverter.com/blog/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="relative px-3 py-2 font-semibold text-sm transition-all duration-200 text-gray-700 hover:text-blue-600"
+      >
+        Blogs
+      </a>
       <Link
         href="/login"
         className={`relative px-3 py-2 font-semibold text-sm transition-all duration-200 ${pathname === '/login'
@@ -110,6 +118,15 @@ const Header = () => {
           <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-full"></span>
         )}
       </Link>
+
+      <a
+        href="https://yourbankstatementconverter.com/blog/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="relative px-3 py-2 font-semibold text-sm transition-all duration-200 text-gray-700 hover:text-blue-600"
+      >
+        Blogs
+      </a>
 
       <div
         className={`flex items-center space-x-2 px-3 py-2 rounded-lg cursor-pointer transition-all duration-200 ${pathname?.startsWith('/settings')
@@ -171,7 +188,7 @@ const Header = () => {
               />
             </div>
             <div className="flex flex-col">
-              <span className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent hidden sm:block">
+              <span className="text-xl font-bold bg-linear-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent hidden sm:block">
                 Your Bank Statement Converter
               </span>
               <span className="text-lg font-bold text-gray-900 sm:hidden">
@@ -222,6 +239,15 @@ const Header = () => {
                 >
                   <span className={pathname?.startsWith('/pricing') ? 'text-blue-600' : ''}>Pricing</span>
                 </Link>
+                <a
+                  href="https://yourbankstatementconverter.com/blog/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center px-4 py-3 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-semibold transition-all duration-200"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <span>Blogs</span>
+                </a>
                 <div
                   className="flex items-center px-4 py-3 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-semibold cursor-pointer transition-all duration-200"
                   onClick={() => { router.push('/settings'); setMobileMenuOpen(false); }}
@@ -269,6 +295,15 @@ const Header = () => {
                 >
                   <span className={pathname?.startsWith('/pricing') ? 'text-blue-600' : ''}>Pricing</span>
                 </Link>
+                <a
+                  href="https://yourbankstatementconverter.com/blog/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center px-4 py-3 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-semibold transition-all duration-200"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <span>Blogs</span>
+                </a>
                 <Link
                   href="/login"
                   className="flex items-center px-4 py-3 rounded-lg text-blue-600 hover:text-blue-700 hover:bg-blue-50 font-semibold transition-all duration-200"

@@ -71,12 +71,12 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-sky-50 to-cyan-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 via-sky-50 to-cyan-50 flex items-center justify-center py-4 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Enhanced decorative background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob"></div>
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-br from-sky-400 to-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob animation-delay-2000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-cyan-400 to-teal-400 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob animation-delay-4000"></div>
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-linear-to-br from-blue-400 to-cyan-400 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob"></div>
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-linear-to-br from-sky-400 to-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob animation-delay-2000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-linear-to-br from-cyan-400 to-teal-400 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob animation-delay-4000"></div>
       </div>
 
       {/* Floating particles effect */}
@@ -96,33 +96,33 @@ const Login = () => {
       </div>
 
       <div className="max-w-md w-full relative z-10 animate-fade-in">
-        <Card className="bg-white/90 backdrop-blur-xl shadow-2xl rounded-3xl p-10 border border-white/30 relative overflow-hidden">
+        <Card className="bg-white/90 backdrop-blur-xl shadow-2xl rounded-2xl p-6 border border-white/30 relative overflow-hidden">
           {/* Shimmer effect overlay */}
-          <div className="absolute inset-0 -z-10 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer"></div>
+          <div className="absolute inset-0 -z-10 bg-linear-to-r from-transparent via-white/20 to-transparent animate-shimmer"></div>
 
           {/* Header Section */}
-          <div className="text-center mb-10">
-            <div className="relative inline-block mb-6">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-cyan-600 to-sky-600 rounded-3xl blur-xl opacity-50 animate-pulse"></div>
-              <div className="relative inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-blue-600 via-cyan-600 to-sky-600 rounded-3xl shadow-2xl transform transition-all duration-300 hover:scale-110 hover:rotate-3">
-                <Sparkles className="w-12 h-12 text-white animate-pulse" />
+          <div className="text-center mb-5">
+            <div className="relative inline-block mb-3">
+              <div className="absolute inset-0 bg-linear-to-r from-blue-600 via-cyan-600 to-sky-600 rounded-2xl blur-xl opacity-50 animate-pulse"></div>
+              <div className="relative inline-flex items-center justify-center w-16 h-16 bg-linear-to-br from-blue-600 via-cyan-600 to-sky-600 rounded-2xl shadow-2xl transform transition-all duration-300 hover:scale-110 hover:rotate-3">
+                <Sparkles className="w-8 h-8 text-white animate-pulse" />
               </div>
             </div>
-            <h2 className="text-4xl font-extrabold bg-gradient-to-r from-blue-600 via-cyan-600 to-sky-600 bg-clip-text text-transparent mb-3 tracking-tight">
+            <h2 className="text-2xl font-extrabold bg-linear-to-r from-blue-600 via-cyan-600 to-sky-600 bg-clip-text text-transparent mb-2 tracking-tight">
               Welcome back
             </h2>
-            <p className="text-gray-600 text-base font-medium">Sign in to your account to continue your journey</p>
+            <p className="text-gray-600 text-sm font-medium">Sign in to your account to continue</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
             {/* Email Field */}
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               <label htmlFor="email" className="block text-sm font-bold text-gray-700 ml-1">
                 Email address
               </label>
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Mail className="h-6 w-6 text-gray-600 group-focus-within:text-blue-600 transition-colors" />
+                  <Mail className="h-5 w-5 text-gray-400 group-focus-within:text-emerald-600 transition-colors" />
                 </div>
                 <input
                   id="email"
@@ -132,7 +132,7 @@ const Login = () => {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 transition-all duration-300 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:shadow-lg disabled:bg-gray-50 disabled:cursor-not-allowed bg-white/50 backdrop-blur-sm"
+                  className="w-full pl-10 pr-4 py-2.5 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 transition-all duration-300 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:shadow-lg disabled:bg-gray-50 disabled:cursor-not-allowed bg-white text-sm"
                   placeholder="name@example.com"
                   disabled={loading}
                 />
@@ -140,13 +140,13 @@ const Login = () => {
             </div>
 
             {/* Password Field */}
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               <label htmlFor="password" className="block text-sm font-bold text-gray-700 ml-1">
                 Password
               </label>
               <div className="relative group">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Lock className="h-6 w-6 text-gray-600 group-focus-within:text-blue-600 transition-colors" />
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Lock className="h-5 w-5 text-gray-600 group-focus-within:text-blue-600 transition-colors" />
                 </div>
                 <input
                   id="password"
@@ -156,40 +156,40 @@ const Login = () => {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-12 pr-12 py-4 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 transition-all duration-300 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:shadow-lg disabled:bg-gray-50 disabled:cursor-not-allowed bg-white/50 backdrop-blur-sm"
+                  className="w-full pl-10 pr-10 py-2.5 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 transition-all duration-300 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:shadow-lg disabled:bg-gray-50 disabled:cursor-not-allowed bg-white text-sm"
                   placeholder="Enter your password"
                   disabled={loading}
                 />
                 <button
                   type="button"
-                  className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-500 hover:text-blue-600 transition-all duration-200 hover:scale-110"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-blue-600 transition-all duration-200 hover:scale-110"
                   onClick={() => setShowPassword(!showPassword)}
                   tabIndex={-1}
                 >
                   {showPassword ? (
-                    <EyeOff className="h-6 w-6 cursor-pointer" />
+                    <EyeOff className="h-5 w-5 cursor-pointer" />
                   ) : (
-                    <Eye className="h-6 w-6 cursor-pointer" />
+                    <Eye className="h-5 w-5 cursor-pointer" />
                   )}
                 </button>
               </div>
             </div>
 
             {/* Remember Me & Forgot Password */}
-            <div className="flex items-center justify-between pt-2">
+            <div className="flex items-center justify-between pt-1">
               <div className="flex items-center group cursor-pointer">
                 <div className="relative">
                   <input
                     id="remember-me"
                     name="remember-me"
                     type="checkbox"
-                    className="w-5 h-5 text-blue-600 border-2 border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer disabled:cursor-not-allowed transition-all"
+                    className="w-4 h-4 text-blue-600 border-2 border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer disabled:cursor-not-allowed transition-all"
                     checked={rememberMe}
                     onChange={(e) => setRememberMe(e.target.checked)}
                     disabled={loading}
                   />
                 </div>
-                <label htmlFor="remember-me" className="ml-3 block text-sm font-semibold text-gray-700 cursor-pointer select-none group-hover:text-blue-600 transition-colors">
+                <label htmlFor="remember-me" className="ml-2 block text-sm font-semibold text-gray-700 cursor-pointer select-none group-hover:text-blue-600 transition-colors">
                   Remember me
                 </label>
               </div>
@@ -205,30 +205,30 @@ const Login = () => {
             {/* Submit Button */}
             <Button
               type="submit"
-              className="w-full bg-gradient-to-r from-blue-600 via-cyan-600 to-sky-600 hover:from-blue-700 hover:via-cyan-700 hover:to-sky-700 text-white py-4 px-4 rounded-xl font-bold text-base shadow-2xl hover:shadow-blue-500/50 transform transition-all duration-300 hover:scale-[1.02] hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-blue-500/40 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden group"
+              className="w-full bg-linear-to-r from-blue-600 via-cyan-600 to-sky-600 hover:from-blue-700 hover:via-cyan-700 hover:to-sky-700 text-white py-2.5 px-4 rounded-md font-bold text-sm shadow-2xl hover:shadow-blue-500/50 transform transition-all duration-300 hover:scale-[1.02] hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-blue-500/40 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden group"
               disabled={loading}
             >
               <span className="relative z-10 flex items-center justify-center">
                 {loading ? (
                   <>
-                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     Signing in...
                   </>
                 ) : (
                   <>
                     <span>Sign in</span>
-                    <svg className="ml-2 w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                     </svg>
                   </>
                 )}
               </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+              <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
             </Button>
           </form>
 
           {/* Divider */}
-          <div className="mt-8 mb-6">
+          <div className="mt-4 mb-4">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t-2 border-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
@@ -240,14 +240,14 @@ const Login = () => {
           </div>
 
           {/* Google OAuth Button */}
-          <div className="mb-6">
+          <div className="mb-4">
             <Button
               type="button"
               onClick={() => window.location.href = `https://auth.emergentagent.com/?redirect=${encodeURIComponent(window.location.origin + '/')}`}
-              className="w-full bg-white border-2 border-gray-200 text-gray-700 py-4 px-4 rounded-xl font-bold text-base transition-all duration-300 hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100 hover:border-gray-300 hover:shadow-xl hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-gray-200 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center group"
+              className="w-full bg-white border-2 border-gray-200 text-gray-700 py-2.5 px-4 rounded-xl font-bold text-sm transition-all duration-300 hover:bg-linear-to-r hover:from-gray-50 hover:to-gray-100 hover:border-gray-300 hover:shadow-xl hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-gray-200 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center group"
               disabled={loading}
             >
-              <svg className="mr-3 h-6 w-6 transform group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
+              <svg className="mr-3 h-5 w-5 transform group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
                 <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
                 <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
@@ -258,10 +258,10 @@ const Login = () => {
           </div>
 
           {/* Sign Up Link */}
-          <div className="text-center pt-6 border-t-2 border-gray-100">
+          <div className="text-center pt-4 border-t-2 border-gray-100">
             <p className="text-sm text-gray-600 font-medium">
               Don't have an account?{' '}
-              <Link href="/signup" className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 transition-all duration-200 hover:underline">
+              <Link href="/signup" className="font-bold text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 transition-all duration-200 hover:underline">
                 Sign up
               </Link>
             </p>

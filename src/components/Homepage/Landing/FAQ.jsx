@@ -95,25 +95,25 @@ export default function FAQ() {
     : faqs.filter(faq => faq.category === activeCategory);
 
   return (
-    <section className="py-20 bg-slate-50">
+    <section className="py-12 sm:py-16 md:py-20 bg-slate-50">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-slate-900 mb-4">
+        <div className="text-center mb-8 sm:mb-10 md:mb-12">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-3 sm:mb-4">
             Frequently Asked Questions
           </h2>
-          <p className="text-xl text-slate-600">
+          <p className="text-base sm:text-lg md:text-xl text-slate-600 px-2 sm:px-0">
             Everything you need to know about converting bank statements
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-2 mb-8 justify-center">
+        <div className="flex flex-wrap gap-2 mb-6 sm:mb-8 justify-center px-2 sm:px-0">
           {categories.map((category) => (
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={`px-4 py-2 rounded-lg font-medium cursor-pointer transition-all ${activeCategory === category
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white text-slate-700 hover:bg-slate-100'
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-sm sm:text-base font-medium cursor-pointer transition-all ${activeCategory === category
+                ? 'bg-blue-600 text-white'
+                : 'bg-white text-slate-700 hover:bg-slate-100'
                 }`}
             >
               {category}
@@ -121,7 +121,7 @@ export default function FAQ() {
           ))}
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           {filteredFaqs.map((faq, index) => (
             <div
               key={index}
@@ -129,28 +129,28 @@ export default function FAQ() {
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="w-full flex items-center justify-between p-6 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 sm:p-6 text-left hover:bg-slate-50 transition-colors"
               >
-                <span className="font-semibold text-slate-900 pr-4">
+                <span className="font-semibold text-sm sm:text-base text-slate-900 pr-3 sm:pr-4">
                   {faq.question}
                 </span>
                 <ChevronDown
-                  className={`w-5 h-5 text-slate-500 cursor-pointer flex-shrink-0 transition-transform ${openIndex === index ? 'transform rotate-180' : ''
+                  className={`w-4 h-4 sm:w-5 sm:h-5 text-slate-500 cursor-pointer flex-shrink-0 transition-transform ${openIndex === index ? 'transform rotate-180' : ''
                     }`}
                 />
               </button>
               {openIndex === index && (
-                <div className="px-6 pb-6">
-                  <p className="text-slate-700 leading-relaxed">{faq.answer}</p>
+                <div className="px-4 sm:px-6 pb-4 sm:pb-6">
+                  <p className="text-sm sm:text-base text-slate-700 leading-relaxed">{faq.answer}</p>
                 </div>
               )}
             </div>
           ))}
         </div>
 
-        <div className="mt-12 text-center">
-          <p className="text-slate-600 mb-4">Still have questions?</p>
-          <a href="mailto:info@yourbankstatementconverter.com"> <button className="bg-blue-600 cursor-pointer hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition-all">
+        <div className="mt-8 sm:mt-10 md:mt-12 text-center">
+          <p className="text-sm sm:text-base text-slate-600 mb-3 sm:mb-4">Still have questions?</p>
+          <a href="mailto:info@yourbankstatementconverter.com"> <button className="bg-blue-600 cursor-pointer hover:bg-blue-700 text-white font-semibold px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base transition-all w-full sm:w-auto">
             Contact Support
           </button></a>
         </div>

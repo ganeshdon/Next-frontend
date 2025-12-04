@@ -219,39 +219,39 @@ const Pricing = () => {
   // Removed unused data arrays
 
   return (
-    <div className="min-h-screen bg-gray-50 py-16">
+    <div className="min-h-screen bg-gray-50 py-8 sm:py-12 md:py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Payment Status Check */}
         {checkingStatus && (
-          <Card className="max-w-md mx-auto p-5 mb-8 bg-blue-50 border-blue-200 shadow-md rounded-xl">
-            <div className="flex items-center justify-center space-x-3">
-              <Loader2 className="h-5 w-5 animate-spin text-blue-600" />
-              <span className="text-blue-800 font-semibold">Checking payment status...</span>
+          <Card className="max-w-md mx-auto p-4 sm:p-5 mb-6 sm:mb-8 bg-blue-50 border-blue-200 shadow-md rounded-xl">
+            <div className="flex items-center justify-center space-x-2 sm:space-x-3">
+              <Loader2 className="h-4 w-4 sm:h-5 sm:w-5 animate-spin text-blue-600" />
+              <span className="text-sm sm:text-base text-blue-800 font-semibold">Checking payment status...</span>
             </div>
           </Card>
         )}
 
         {/* Header Section */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-8 sm:mb-10 md:mb-12 px-2 sm:px-0">
           {/* <div className="inline-block mb-4">
             <span className="px-3 py-1 bg-green-100 text-green-700 rounded text-xs font-semibold">
               Plans
             </span>
           </div> */}
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">
             Your Bank Statement Converter Pricing
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto px-2 sm:px-0">
             Experience the convenience of having everything you need in one place, enhancing your digital interactions effortlessly.
           </p>
         </div>
 
         {/* Billing Toggle */}
-        <div className="flex items-center justify-center mb-12">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-0 mb-8 sm:mb-10 md:mb-12">
           <div className="relative inline-flex items-center bg-white rounded-full p-1 shadow-md border border-gray-200">
             <button
               onClick={() => setBillingInterval('monthly')}
-              className={`relative px-8 py-2.5 rounded-full font-semibold text-sm transition-all duration-300 ${billingInterval === 'monthly'
+              className={`relative px-6 sm:px-8 py-2 sm:py-2.5 rounded-full font-semibold text-xs sm:text-sm transition-all duration-300 ${billingInterval === 'monthly'
                 ? 'bg-blue-500 text-white shadow-sm'
                 : 'text-gray-600 hover:text-gray-900'
                 }`}
@@ -261,7 +261,7 @@ const Pricing = () => {
             </button>
             <button
               onClick={() => setBillingInterval('annual')}
-              className={`relative px-8 py-2.5 rounded-full font-semibold text-sm transition-all duration-300 ${billingInterval === 'annual'
+              className={`relative px-6 sm:px-8 py-2 sm:py-2.5 rounded-full font-semibold text-xs sm:text-sm transition-all duration-300 ${billingInterval === 'annual'
                 ? 'bg-blue-500 text-white shadow-sm'
                 : 'text-gray-600 hover:text-gray-900'
                 }`}
@@ -271,14 +271,14 @@ const Pricing = () => {
             </button>
           </div>
           {billingInterval === 'annual' && (
-            <span className="ml-4 px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-semibold shadow-sm">
+            <span className="px-3 sm:px-4 py-1.5 sm:py-2 bg-green-100 text-green-800 rounded-full text-xs sm:text-sm font-semibold shadow-sm">
               💰 Save 20%
             </span>
           )}
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-7xl mx-auto">
           {plans.map((plan, index) => {
             // Check if this is the current plan - must match both tier AND billing interval
             const isCurrentPlan = user?.subscription_tier === plan.id &&
@@ -296,27 +296,27 @@ const Pricing = () => {
             return (
               <div key={plan.id} className="relative">
                 {isPopular && (
-                  <div className="absolute -top-3 right-4 z-10">
-                    <span className="bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+                  <div className="absolute -top-2 sm:-top-3 right-2 sm:right-4 z-10">
+                    <span className="bg-blue-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs font-bold">
                       Popular
                     </span>
                   </div>
                 )}
                 <Card
-                  className={`p-8 ${cardBg} border-2 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 h-full flex flex-col ${isCurrentPlan && !hasNoPages
+                  className={`p-5 sm:p-6 md:p-8 ${cardBg} border-2 rounded-xl sm:rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 sm:hover:-translate-y-2 h-full flex flex-col ${isCurrentPlan && !hasNoPages
                     ? 'border-blue-500 ring-2 ring-blue-200'
                     : 'border-gray-200 hover:border-blue-300'
                     }`}
                 >
-                  <div className="text-center mb-8">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-3">{plan.name}</h3>
-                    <div className="mb-6">
+                  <div className="text-center mb-6 sm:mb-8">
+                    <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2 sm:mb-3">{plan.name}</h3>
+                    <div className="mb-4 sm:mb-6">
                       <div className="flex items-baseline justify-center">
-                        <span className="text-5xl font-bold text-gray-900">
+                        <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900">
                           {formatPrice(plan)}
                         </span>
                         {typeof plan.price[billingInterval] === 'number' && (
-                          <span className="text-lg text-gray-600 ml-2">/month</span>
+                          <span className="text-sm sm:text-base md:text-lg text-gray-600 ml-1 sm:ml-2">/month</span>
                         )}
                       </div>
                     </div>
@@ -324,7 +324,7 @@ const Pricing = () => {
 
                   <Button
                     onClick={() => handlePlanSelect(plan)}
-                    className={`w-full py-4 px-6 rounded-xl font-semibold text-base mb-8 transition-all duration-200 ${!canSelectPlan
+                    className={`w-full py-3 sm:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl font-semibold text-sm sm:text-base mb-6 sm:mb-8 transition-all duration-200 ${!canSelectPlan
                       ? 'bg-gray-100 text-gray-600 cursor-not-allowed'
                       : isPopular
                         ? 'bg-white text-purple-600 border-2 border-purple-200 hover:bg-purple-50'
@@ -334,19 +334,19 @@ const Pricing = () => {
                   >
                     {loadingPlan === plan.id ? (
                       <>
-                        <Loader2 className="h-5 w-5 animate-spin mr-2 inline" />
+                        <Loader2 className="h-4 w-4 sm:h-5 sm:w-5 animate-spin mr-2 inline" />
                         Processing...
                       </>
                     ) : isCurrentPlan && !hasNoPages ? 'Current Plan' : plan.buttonText}
                   </Button>
 
                   {plan.features.length > 0 && (
-                    <div className="border-t border-gray-200 pt-6">
-                      <ul className="space-y-4">
+                    <div className="border-t border-gray-200 pt-4 sm:pt-6">
+                      <ul className="space-y-3 sm:space-y-4">
                         {plan.features.map((feature, featureIndex) => (
-                          <li key={featureIndex} className="flex items-center text-sm text-gray-700">
-                            <div className={`w-5 h-5 rounded-full ${checkmarkColor} flex items-center justify-center mr-3 shrink-0`}>
-                              <Check className="h-3 w-3 text-white" />
+                          <li key={featureIndex} className="flex items-center text-xs sm:text-sm text-gray-700">
+                            <div className={`w-4 h-4 sm:w-5 sm:h-5 rounded-full ${checkmarkColor} flex items-center justify-center mr-2 sm:mr-3 shrink-0`}>
+                              <Check className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-white" />
                             </div>
                             <span className="font-medium">{feature}</span>
                           </li>
@@ -355,29 +355,29 @@ const Pricing = () => {
                     </div>
                   )}
                   {plan.id === 'enterprise' && (
-                    <div className="border-t border-gray-200 pt-6">
-                      <ul className="space-y-4 text-sm text-gray-700">
+                    <div className="border-t border-gray-200 pt-4 sm:pt-6">
+                      <ul className="space-y-3 sm:space-y-4 text-xs sm:text-sm text-gray-700">
                         <li className="flex items-center">
-                          <div className={`w-5 h-5 rounded-full ${checkmarkColor} flex items-center justify-center mr-3 shrink-0`}>
-                            <Check className="h-3 w-3 text-white" />
+                          <div className={`w-4 h-4 sm:w-5 sm:h-5 rounded-full ${checkmarkColor} flex items-center justify-center mr-2 sm:mr-3 shrink-0`}>
+                            <Check className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-white" />
                           </div>
                           <span className="font-semibold">Unlimited pages</span>
                         </li>
                         <li className="flex items-center">
-                          <div className={`w-5 h-5 rounded-full ${checkmarkColor} flex items-center justify-center mr-3 shrink-0`}>
-                            <Check className="h-3 w-3 text-white" />
+                          <div className={`w-4 h-4 sm:w-5 sm:h-5 rounded-full ${checkmarkColor} flex items-center justify-center mr-2 sm:mr-3 shrink-0`}>
+                            <Check className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-white" />
                           </div>
                           <span className="font-semibold">Priority support</span>
                         </li>
                         <li className="flex items-center">
-                          <div className={`w-5 h-5 rounded-full ${checkmarkColor} flex items-center justify-center mr-3 shrink-0`}>
-                            <Check className="h-3 w-3 text-white" />
+                          <div className={`w-4 h-4 sm:w-5 sm:h-5 rounded-full ${checkmarkColor} flex items-center justify-center mr-2 sm:mr-3 shrink-0`}>
+                            <Check className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-white" />
                           </div>
                           <span className="font-semibold">Custom integrations</span>
                         </li>
                         <li className="flex items-center">
-                          <div className={`w-5 h-5 rounded-full ${checkmarkColor} flex items-center justify-center mr-3 shrink-0`}>
-                            <Check className="h-3 w-3 text-white" />
+                          <div className={`w-4 h-4 sm:w-5 sm:h-5 rounded-full ${checkmarkColor} flex items-center justify-center mr-2 sm:mr-3 shrink-0`}>
+                            <Check className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-white" />
                           </div>
                           <span className="font-semibold">Dedicated account manager</span>
                         </li>

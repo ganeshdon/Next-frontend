@@ -142,18 +142,18 @@ const Results = ({ extractedData, excelFile, filename, onReset, pagesUsed = 0, i
   };
 
   return (
-    <div className="space-y-8" data-testid="results-component">
+    <div className="space-y-6 sm:space-y-8" data-testid="results-component">
       {/* Success Header */}
-      <div className="text-center" data-testid="success-header">
-        <div className="w-20 h-20 mx-auto bg-green-100 rounded-full flex items-center justify-center mb-4">
-          <svg className="w-10 h-10 text-green-600 checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="text-center px-2 sm:px-0" data-testid="success-header">
+        <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto bg-green-100 rounded-full flex items-center justify-center mb-3 sm:mb-4">
+          <svg className="w-8 h-8 sm:w-10 sm:h-10 text-green-600 checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h2 className="text-3xl font-bold text-gray-900 mb-2" data-testid="success-title">
+        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2" data-testid="success-title">
           Conversion Complete!
         </h2>
-        <p className="text-gray-600" data-testid="success-message">
+        <p className="text-sm sm:text-base text-gray-600 px-2 sm:px-0" data-testid="success-message">
           {isAnonymous
             ? 'Your bank statement conversion is complete!'
             : 'Your bank statement has been successfully converted to Excel format'
@@ -161,21 +161,21 @@ const Results = ({ extractedData, excelFile, filename, onReset, pagesUsed = 0, i
         </p>
 
         {isAnonymous && (
-          <Card className="mt-4 p-4 bg-blue-50 border-blue-200">
-            <div className="flex items-center justify-between">
+          <Card className="mt-4 p-3 sm:p-4 bg-blue-50 border-blue-200">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
               <div className="flex items-center space-x-2">
-                <UserPlus className="h-5 w-5 text-blue-600" />
-                <span className="text-blue-800 font-medium">Want unlimited conversions?</span>
+                <UserPlus className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600 flex-shrink-0" />
+                <span className="text-sm sm:text-base text-blue-800 font-medium">Want unlimited conversions?</span>
               </div>
               <Button
                 onClick={() => router.push('/signup')}
                 size="sm"
-                className="bg-blue-600 text-white hover:bg-blue-700"
+                className="bg-blue-600 text-white hover:bg-blue-700 w-full sm:w-auto"
               >
                 Sign Up Free
               </Button>
             </div>
-            <p className="text-sm text-blue-700 mt-2">
+            <p className="text-xs sm:text-sm text-blue-700 mt-2">
               Sign up to get 7 free conversions daily plus advanced features!
             </p>
           </Card>
@@ -184,78 +184,78 @@ const Results = ({ extractedData, excelFile, filename, onReset, pagesUsed = 0, i
 
       {/* Data Summary */}
       {extractedData && (
-        <Card className="p-6" data-testid="data-summary">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4" data-testid="summary-title">
+        <Card className="p-4 sm:p-6" data-testid="data-summary">
+          <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4" data-testid="summary-title">
             Extracted Data Summary
           </h3>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
             {/* Account Info */}
-            <div className="bg-blue-50 rounded-lg p-4" data-testid="account-info">
-              <div className="text-sm text-blue-600 font-medium mb-1">Account Number</div>
-              <div className="text-lg font-semibold text-blue-900" data-testid="account-number">
+            <div className="bg-blue-50 rounded-lg p-3 sm:p-4" data-testid="account-info">
+              <div className="text-xs sm:text-sm text-blue-600 font-medium mb-1">Account Number</div>
+              <div className="text-base sm:text-lg font-semibold text-blue-900 break-words" data-testid="account-number">
                 {extractedData.accountInfo?.accountNumber || 'N/A'}
               </div>
             </div>
 
             {/* Transaction Count */}
-            <div className="bg-green-50 rounded-lg p-4" data-testid="transaction-count">
-              <div className="text-sm text-green-600 font-medium mb-1">Total Transactions</div>
-              <div className="text-lg font-semibold text-green-900" data-testid="transaction-number">
+            <div className="bg-green-50 rounded-lg p-3 sm:p-4" data-testid="transaction-count">
+              <div className="text-xs sm:text-sm text-green-600 font-medium mb-1">Total Transactions</div>
+              <div className="text-base sm:text-lg font-semibold text-green-900" data-testid="transaction-number">
                 {getTransactionCount()}
               </div>
             </div>
 
             {/* Beginning Balance */}
-            <div className="bg-purple-50 rounded-lg p-4" data-testid="beginning-balance">
-              <div className="text-sm text-purple-600 font-medium mb-1">Beginning Balance</div>
-              <div className="text-lg font-semibold text-purple-900" data-testid="beginning-amount">
+            <div className="bg-purple-50 rounded-lg p-3 sm:p-4" data-testid="beginning-balance">
+              <div className="text-xs sm:text-sm text-purple-600 font-medium mb-1">Beginning Balance</div>
+              <div className="text-base sm:text-lg font-semibold text-purple-900" data-testid="beginning-amount">
                 {formatCurrency(extractedData.accountInfo?.beginningBalance)}
               </div>
             </div>
 
             {/* Ending Balance */}
-            <div className="bg-indigo-50 rounded-lg p-4" data-testid="ending-balance">
-              <div className="text-sm text-indigo-600 font-medium mb-1">Ending Balance</div>
-              <div className="text-lg font-semibold text-indigo-900" data-testid="ending-amount">
+            <div className="bg-indigo-50 rounded-lg p-3 sm:p-4" data-testid="ending-balance">
+              <div className="text-xs sm:text-sm text-indigo-600 font-medium mb-1">Ending Balance</div>
+              <div className="text-base sm:text-lg font-semibold text-indigo-900" data-testid="ending-amount">
                 {formatCurrency(extractedData.accountInfo?.endingBalance)}
               </div>
             </div>
           </div>
 
           {/* Transaction Categories */}
-          <div className="mt-6 grid md:grid-cols-2 gap-4">
+          <div className="mt-4 sm:mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             {extractedData.deposits?.length > 0 && (
-              <div className="bg-gray-50 rounded-lg p-4" data-testid="deposits-category">
-                <div className="text-sm text-gray-600 font-medium mb-1">Deposits & Credits</div>
-                <div className="text-lg font-semibold text-gray-900" data-testid="deposits-count">
+              <div className="bg-gray-50 rounded-lg p-3 sm:p-4" data-testid="deposits-category">
+                <div className="text-xs sm:text-sm text-gray-600 font-medium mb-1">Deposits & Credits</div>
+                <div className="text-base sm:text-lg font-semibold text-gray-900" data-testid="deposits-count">
                   {extractedData.deposits.length} transactions
                 </div>
               </div>
             )}
 
             {extractedData.atmWithdrawals?.length > 0 && (
-              <div className="bg-gray-50 rounded-lg p-4" data-testid="atm-category">
-                <div className="text-sm text-gray-600 font-medium mb-1">ATM Withdrawals</div>
-                <div className="text-lg font-semibold text-gray-900" data-testid="atm-count">
+              <div className="bg-gray-50 rounded-lg p-3 sm:p-4" data-testid="atm-category">
+                <div className="text-xs sm:text-sm text-gray-600 font-medium mb-1">ATM Withdrawals</div>
+                <div className="text-base sm:text-lg font-semibold text-gray-900" data-testid="atm-count">
                   {extractedData.atmWithdrawals.length} transactions
                 </div>
               </div>
             )}
 
             {extractedData.checksPaid?.length > 0 && (
-              <div className="bg-gray-50 rounded-lg p-4" data-testid="checks-category">
-                <div className="text-sm text-gray-600 font-medium mb-1">Checks Paid</div>
-                <div className="text-lg font-semibold text-gray-900" data-testid="checks-count">
+              <div className="bg-gray-50 rounded-lg p-3 sm:p-4" data-testid="checks-category">
+                <div className="text-xs sm:text-sm text-gray-600 font-medium mb-1">Checks Paid</div>
+                <div className="text-base sm:text-lg font-semibold text-gray-900" data-testid="checks-count">
                   {extractedData.checksPaid.length} transactions
                 </div>
               </div>
             )}
 
             {extractedData.visaPurchases?.length > 0 && (
-              <div className="bg-gray-50 rounded-lg p-4" data-testid="visa-category">
-                <div className="text-sm text-gray-600 font-medium mb-1">Card Purchases</div>
-                <div className="text-lg font-semibold text-gray-900" data-testid="visa-count">
+              <div className="bg-gray-50 rounded-lg p-3 sm:p-4" data-testid="visa-category">
+                <div className="text-xs sm:text-sm text-gray-600 font-medium mb-1">Card Purchases</div>
+                <div className="text-base sm:text-lg font-semibold text-gray-900" data-testid="visa-count">
                   {extractedData.visaPurchases.length} transactions
                 </div>
               </div>
@@ -265,13 +265,13 @@ const Results = ({ extractedData, excelFile, filename, onReset, pagesUsed = 0, i
       )}
 
       {/* Action Buttons */}
-      <div className="flex flex-col sm:flex-row gap-4 justify-center" data-testid="action-buttons">
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-2 sm:px-0" data-testid="action-buttons">
         <Button
           onClick={handleDownload}
-          className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200 hover:shadow-lg flex items-center space-x-2"
+          className="bg-green-600 hover:bg-green-700 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-medium transition-all duration-200 hover:shadow-lg flex items-center justify-center space-x-2 w-full sm:w-auto"
           data-testid="download-excel-btn"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
           <span>Download Complete CSV</span>
@@ -280,7 +280,7 @@ const Results = ({ extractedData, excelFile, filename, onReset, pagesUsed = 0, i
         <Button
           onClick={onReset}
           variant="outline"
-          className="px-8 py-3 rounded-lg font-medium transition-all duration-200 border-gray-300 text-gray-700 hover:bg-gray-50"
+          className="px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-medium transition-all duration-200 border-gray-300 text-gray-700 hover:bg-gray-50 w-full sm:w-auto"
           data-testid="convert-another-btn"
         >
           Convert Another File
@@ -288,35 +288,35 @@ const Results = ({ extractedData, excelFile, filename, onReset, pagesUsed = 0, i
       </div>
 
       {/* Excel Preview Info */}
-      <Card className="p-6 bg-gray-50" data-testid="excel-preview">
-        <h3 className="font-semibold text-gray-900 mb-3" data-testid="excel-info-title">
+      <Card className="p-4 sm:p-6 bg-gray-50" data-testid="excel-preview">
+        <h3 className="text-sm sm:text-base font-semibold text-gray-900 mb-2 sm:mb-3" data-testid="excel-info-title">
           Excel File Contents
         </h3>
-        <div className="text-sm text-gray-600 space-y-2">
+        <div className="text-xs sm:text-sm text-gray-600 space-y-1.5 sm:space-y-2">
           <div className="flex items-center space-x-2">
-            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full flex-shrink-0"></div>
             <span><strong>Sheet 1:</strong> Account Summary (balances, totals)</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full flex-shrink-0"></div>
             <span><strong>Sheet 2:</strong> Deposits & Credits</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-red-500 rounded-full flex-shrink-0"></div>
             <span><strong>Sheet 3:</strong> ATM Withdrawals</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-500 rounded-full flex-shrink-0"></div>
             <span><strong>Sheet 4:</strong> Checks Paid</span>
           </div>
           {extractedData?.visaPurchases?.length > 0 && (
             <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-orange-500 rounded-full flex-shrink-0"></div>
               <span><strong>Sheet 5:</strong> Card Purchases</span>
             </div>
           )}
           <div className="flex items-center space-x-2">
-            <div className="w-2 h-2 bg-gray-500 rounded-full"></div>
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gray-500 rounded-full flex-shrink-0"></div>
             <span><strong>Final Sheet:</strong> All Transactions (combined)</span>
           </div>
         </div>

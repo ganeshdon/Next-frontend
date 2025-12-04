@@ -59,32 +59,32 @@ export default function UseCases() {
   ];
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-12 sm:py-16 md:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-slate-900 mb-4">
+        <div className="text-center mb-10 sm:mb-12 md:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-3 sm:mb-4 px-2 sm:px-0">
             Perfect for Every Financial Need
           </h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-3xl mx-auto px-2 sm:px-4 md:px-0">
             From personal budgeting to professional accounting, our converter saves time and eliminates errors
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           {useCases.map((useCase, index) => {
             const Icon = useCase.icon;
             return (
               <div
                 key={index}
-                className="bg-slate-50 rounded-xl p-8 hover:shadow-lg transition-shadow"
+                className="bg-slate-50 rounded-xl p-6 sm:p-7 md:p-8 hover:shadow-lg transition-shadow"
               >
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                  <Icon className="w-6 h-6 text-blue-600" />
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
+                  <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-3">
+                <h3 className="text-lg sm:text-xl font-semibold text-slate-900 mb-2 sm:mb-3">
                   {useCase.title}
                 </h3>
-                <p className="text-slate-700 leading-relaxed">
+                <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
                   {useCase.description}
                 </p>
               </div>
@@ -92,10 +92,10 @@ export default function UseCases() {
           })}
         </div>
 
-        <div className="mt-16 text-center">
+        <div className="mt-10 sm:mt-12 md:mt-16 text-center">
           <button
             onClick={handleStartConverting}
-            className="bg-green-500 cursor-pointer hover:bg-green-600 text-white font-semibold px-8 py-4 rounded-lg text-lg transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
+            className="bg-green-500 cursor-pointer hover:bg-green-600 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg transition-all shadow-lg hover:shadow-xl transform hover:scale-105 w-full sm:w-auto"
           >
             Start Converting Free →
           </button>
