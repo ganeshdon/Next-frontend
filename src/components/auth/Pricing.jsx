@@ -54,15 +54,9 @@ const Pricing = () => {
 
             if (invoiceResponse.ok) {
               const invoiceResult = await invoiceResponse.json();
-              console.log('✅ Invoice fetched and saved:', invoiceResult);
               if (invoiceResult.invoices_saved > 0) {
                 toast.success(`Invoice saved successfully!`);
-              } else if (invoiceResult.message && invoiceResult.message.includes('already exists')) {
-                console.log('ℹ️ Invoice already exists');
               }
-            } else {
-              const errorText = await invoiceResponse.text();
-              console.warn('⚠️ Could not fetch invoice:', errorText);
             }
           } catch (invoiceError) {
             console.error('❌ Error fetching invoice:', invoiceError);
@@ -79,7 +73,6 @@ const Pricing = () => {
         try {
           const updatedUser = await refreshUser();
           if (updatedUser) {
-            console.log(`User refreshed (attempt ${attempt}):`, updatedUser);
             toast.success(`Your account now has ${updatedUser.pages_remaining} pages remaining!`);
 
             // If we got updated data, stop polling

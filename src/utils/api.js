@@ -1,8 +1,5 @@
 const MODE = process.env.NEXT_PUBLIC_API_MODE || 'LIVE'; // LOCAL, LIVE, WIFI
 
-console.log('Current API Mode:', MODE);
-console.log('Raw env value:', process.env.NEXT_PUBLIC_API_MODE);
-
 const API = {};
 
 API.MODE = MODE;

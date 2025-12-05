@@ -88,14 +88,9 @@ const Settings = () => {
       if (response.ok) {
         const data = await response.json();
         setInvoices(data.invoices || []);
-      } else {
-        const error = await response.json();
-        console.error('Failed to fetch invoices:', error);
-        // Don't show error toast, just log it
       }
     } catch (error) {
       console.error('Error fetching invoices:', error);
-      // Don't show error toast, just log it
     } finally {
       setLoadingInvoices(false);
     }

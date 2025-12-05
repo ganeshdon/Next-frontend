@@ -39,28 +39,19 @@ const Converter = () => {
     if (paymentSuccess === 'success' && !paymentHandledRef.current) {
       paymentHandledRef.current = true; // Mark as handled
 
-      console.log('🔍 Payment redirect detected (verifying status...)');
-
       // Get subscription_id from sessionStorage
       const subscriptionId = sessionStorage.getItem('pending_subscription_id');
-      console.log('📝 Subscription ID from storage:', subscriptionId);
-      console.log('🔐 Token available:', !!token);
-      console.log('👤 Is authenticated:', isAuthenticated);
 
       // Show processing message while verifying payment status
       toast.info('Verifying payment status...');
 
       // Function to check and update subscription status
       const checkSubscription = async () => {
-        console.log('🚀 Starting subscription check...');
-
         // Check if we have a token (user might not be fully loaded yet)
         if (!token) {
-          console.error('❌ No token available');
           // Wait for auth to initialize, then try again
           setTimeout(() => {
             if (token) {
-              console.log('🔄 Token now available, retrying...');
               checkSubscription();
             }
           }, 1000);
@@ -68,11 +59,9 @@ const Converter = () => {
         }
 
         if (!subscriptionId) {
-          console.error('❌ No subscription ID found in storage');
           // Refresh anyway (only if not already in progress)
           if (refreshUser && !refreshInProgressRef.current) {
             refreshInProgressRef.current = true;
-            console.log('🔄 Refreshing user data anyway...');
             setTimeout(async () => {
               try {
                 await refreshUser();
@@ -87,9 +76,6 @@ const Converter = () => {
         try {
           const backendUrl = API.HOST;
           const url = `${backendUrl}/api/dodo/check-subscription/${subscriptionId}`;
-
-          console.log('📞 Calling:', url);
-          console.log('🔑 Using token:', token.substring(0, 20) + '...');
 
           // Build headers/options depending on token type (JWT vs OAuth session)
           const headers = { 'Content-Type': 'application/json' };
@@ -112,11 +98,8 @@ const Converter = () => {
           // Call backend to check and update subscription
           const response = await fetch(url, fetchOptions);
 
-          console.log('📡 Response status:', response.status);
-
           if (response.ok) {
             const result = await response.json();
-            console.log('✅ Subscription check result:', result);
 
             if (result.status === 'success') {
               // Clear retry counter on success
@@ -138,11 +121,9 @@ const Converter = () => {
                       (typeof window !== 'undefined' ? sessionStorage.getItem('token') : null);
 
                     if (!currentToken && i < retries - 1) {
-                      console.log(`⏳ Waiting for token... (attempt ${i + 1}/${retries})`);
                       continue;
                     }
 
-                    console.log('📄 Fetching invoice for subscription:', subscriptionId);
                     const invoiceUrl = `${backendUrl}/api/dodo/fetch-and-save-invoice?subscription_id=${subscriptionId}`;
 
                     const invoiceHeaders = { 'Content-Type': 'application/json' };
@@ -158,25 +139,14 @@ const Converter = () => {
 
                     if (invoiceResponse.ok) {
                       const invoiceResult = await invoiceResponse.json();
-                      console.log('✅ Invoice fetched and saved:', invoiceResult);
                       if (invoiceResult.invoices_saved > 0) {
                         toast.success(`Invoice saved successfully!`);
-                      } else if (invoiceResult.message && invoiceResult.message.includes('already exists')) {
-                        console.log('ℹ️ Invoice already exists');
                       }
                       return; // Success, exit retry loop
-                    } else {
-                      const errorText = await invoiceResponse.text();
-                      console.warn(`⚠️ Could not fetch invoice (attempt ${i + 1}):`, errorText);
-                      if (i === retries - 1) {
-                        console.warn('⚠️ Invoice fetch failed after all retries, but continuing...');
-                      }
                     }
                   } catch (invoiceError) {
                     console.error(`❌ Error fetching invoice (attempt ${i + 1}):`, invoiceError);
-                    if (i === retries - 1) {
-                      console.warn('⚠️ Invoice fetch failed after all retries');
-                    }
+                    // Invoice fetch failed, continue without it
                   }
                 }
               };
@@ -186,7 +156,6 @@ const Converter = () => {
 
               // Clear the pending subscription
               sessionStorage.removeItem('pending_subscription_id');
-              console.log('🗑️ Cleared pending subscription from storage');
 
               // Refresh user data once after successful subscription activation (prevent duplicates)
               if (refreshUser && !refreshInProgressRef.current) {
@@ -194,12 +163,11 @@ const Converter = () => {
                 setTimeout(async () => {
                   try {
                     const updatedUser = await refreshUser();
-                    console.log('✅ User refreshed after subscription activation:', updatedUser);
                     if (updatedUser) {
                       toast.success(`Your account now has ${updatedUser.pages_remaining} pages remaining!`);
                     }
                   } catch (error) {
-                    console.error('Failed to refresh user after subscription:', error);
+                    // Failed to refresh user
                   } finally {
                     refreshInProgressRef.current = false;
                   }
@@ -209,7 +177,6 @@ const Converter = () => {
               // Check if subscription is in a terminal state (failed, cancelled, etc.)
               const terminalStates = ['failed', 'cancelled', 'expired', 'not_found'];
               if (terminalStates.includes(result.status)) {
-                console.error('❌ Subscription is in terminal state:', result.status);
                 sessionStorage.removeItem('pending_subscription_id');
                 sessionStorage.removeItem('last_payment_time');
                 if (result.status === 'failed') {
@@ -220,12 +187,10 @@ const Converter = () => {
                 return; // Stop retrying
               }
 
-              console.warn('⚠️ Subscription not yet active:', result);
               toast.info('Processing your subscription... Please refresh in a few seconds.');
             }
           } else {
-            const errorText = await response.text();
-            console.error('❌ Subscription check failed:', response.status, errorText);
+            await response.text();
             toast.error('Could not verify subscription. Please refresh the page.');
           }
         } catch (error) {
@@ -240,14 +205,12 @@ const Converter = () => {
       // Also retry after a delay in case backend is still processing
       setTimeout(() => {
         if (sessionStorage.getItem('pending_subscription_id')) {
-          console.log('🔄 Retrying subscription check...');
           checkSubscription();
         }
       }, 3000);
 
       // Clean URL after a longer delay to ensure refresh completes
       setTimeout(() => {
-        console.log('🧹 Cleaning URL');
         router.replace('/', undefined, { shallow: true });
         paymentHandledRef.current = false; // Reset for future payments
       }, 5000);
@@ -257,11 +220,7 @@ const Converter = () => {
   // Watch for user changes and update display when user data changes
   useEffect(() => {
     if (user) {
-      console.log('👤 User data updated:', {
-        pages_remaining: user.pages_remaining,
-        pages_limit: user.pages_limit,
-        subscription_tier: user.subscription_tier
-      });
+      // User data updated
     }
   }, [user]);
 
@@ -288,8 +247,6 @@ const Converter = () => {
       return;
     }
 
-    console.log('🔍 Found pending subscription, automatically checking status...');
-
     // Wait for auth to be ready, then check subscription
     const checkWhenReady = () => {
       if (!isAuthenticated || !token) {
@@ -303,8 +260,6 @@ const Converter = () => {
         try {
           const backendUrl = API.HOST;
           const url = `${backendUrl}/api/dodo/check-subscription/${pendingSubscriptionId}`;
-
-          console.log('📞 Auto-checking subscription:', url);
 
           const headers = { 'Content-Type': 'application/json' };
           const fetchOptions = { method: 'POST', headers };
@@ -323,19 +278,14 @@ const Converter = () => {
 
           const response = await fetch(url, fetchOptions);
 
-          console.log('📡 Subscription check response:', response.status);
-
           if (response.ok) {
             const result = await response.json();
-            console.log('✅ Subscription check result:', result);
 
             if (result.status === 'success') {
-              console.log('✅ Pending subscription activated!');
 
               // Fetch and save invoice from Dodo API (works without token, uses credentials)
               const fetchInvoice = async () => {
                 try {
-                  console.log('📄 Fetching invoice for subscription:', pendingSubscriptionId);
                   const invoiceUrl = `${backendUrl}/api/dodo/fetch-and-save-invoice?subscription_id=${pendingSubscriptionId}`;
 
                   const invoiceHeaders = { 'Content-Type': 'application/json' };
@@ -352,11 +302,8 @@ const Converter = () => {
 
                   if (invoiceResponse.ok) {
                     const invoiceResult = await invoiceResponse.json();
-                    console.log('✅ Invoice fetched and saved:', invoiceResult);
                     if (invoiceResult.invoices_saved > 0) {
                       toast.success(`Invoice saved successfully!`);
-                    } else if (invoiceResult.message) {
-                      console.log('ℹ️ Invoice result:', invoiceResult.message);
                     }
                   } else {
                     const errorText = await invoiceResponse.text();
@@ -384,7 +331,6 @@ const Converter = () => {
                   try {
                     const updatedUser = await refreshUser();
                     if (updatedUser) {
-                      console.log('✅ User refreshed:', updatedUser);
                       toast.success(`Your account now has ${updatedUser.pages_remaining} pages remaining!`);
                     }
                   } catch (error) {
@@ -398,7 +344,6 @@ const Converter = () => {
               // Check if subscription is in a terminal state (failed, cancelled, etc.)
               const terminalStates = ['failed', 'cancelled', 'expired', 'not_found'];
               if (terminalStates.includes(result.status)) {
-                console.error('❌ Subscription is in terminal state:', result.status);
                 sessionStorage.removeItem('pending_subscription_id');
                 sessionStorage.removeItem('last_payment_time');
                 if (result.status === 'failed') {
@@ -409,13 +354,11 @@ const Converter = () => {
                 return; // Stop retrying
               }
 
-              console.log('⚠️ Subscription not yet active, will retry in 3 seconds...');
               // Retry after 3 seconds if not yet active (but limit retries)
               const retryCount = parseInt(sessionStorage.getItem('subscription_check_retries') || '0');
               const maxRetries = 20; // Stop after 20 retries (60 seconds)
 
               if (retryCount >= maxRetries) {
-                console.error('❌ Max retries reached, stopping subscription check');
                 sessionStorage.removeItem('pending_subscription_id');
                 sessionStorage.removeItem('last_payment_time');
                 sessionStorage.removeItem('subscription_check_retries');
@@ -572,7 +515,6 @@ const Converter = () => {
         try {
           // Use Promise.resolve to ensure checkPages never throws
           const pageCheck = await Promise.resolve(checkPages(1)).catch((err) => {
-            console.error('Promise rejection in checkPages:', err);
             return { can_convert: false, error: 'Network error' };
           });
 
@@ -603,7 +545,6 @@ const Converter = () => {
 
   const processFile = async (file) => {
     try {
-      console.log('Processing PDF:', file.name, isAnonymous ? '(Anonymous)' : '(Authenticated)');
 
       const formData = new FormData();
       formData.append('file', file);
@@ -640,15 +581,12 @@ const Converter = () => {
         const errorData = await response.json().catch(() => ({ detail: 'Failed to process PDF' }));
         const errorMessage = errorData.detail || `Failed to process PDF: ${response.status}`;
 
-        console.log('API Error:', errorMessage); // Debug log
-
         // Handle insufficient pages error - show toast and reset to upload
         const isInsufficientPages = errorMessage.toLowerCase().includes('insufficient pages') ||
           (errorMessage.toLowerCase().includes('need') && errorMessage.toLowerCase().includes('remaining')) ||
           errorMessage.toLowerCase().includes('pages remaining');
 
         if (isInsufficientPages) {
-          console.log('Insufficient pages detected, showing toast');
           toast.error('Insufficient pages remaining. Please upgrade your plan to continue processing.', {
             duration: 5000,
             action: {
@@ -667,7 +605,6 @@ const Converter = () => {
       }
 
       const result = await response.json();
-      console.log('AI Extraction Result:', result);
 
       if (!result.success || !result.data) {
         throw new Error('Invalid response from AI processing');
@@ -705,7 +642,6 @@ const Converter = () => {
         errorMessage.toLowerCase().includes('pages remaining');
 
       if (isInsufficientPages) {
-        console.log('Insufficient pages detected in catch, showing toast');
         toast.error('Insufficient pages remaining. Please upgrade your plan to continue processing.', {
           duration: 5000,
           action: {

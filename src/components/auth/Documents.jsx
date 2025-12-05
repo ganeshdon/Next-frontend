@@ -58,8 +58,7 @@ const Documents = () => {
           // Unauthorized - user might need to login
           toast.error('Please login to view your documents.');
         } else {
-          const errorText = await response.text().catch(() => 'Unknown error');
-          console.error('Failed to fetch documents:', response.status, errorText);
+          await response.text().catch(() => 'Unknown error');
           toast.error('Failed to fetch documents. Please try again.');
         }
       }

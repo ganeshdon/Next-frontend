@@ -225,7 +225,6 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       // Ultimate catch-all - should never reach here, but just in case
       console.error('Unexpected login error:', error);
-      
       // Handle different types of errors
       let errorMessage = 'An unexpected error occurred. Please try again.';
       
@@ -307,7 +306,6 @@ export const AuthProvider = ({ children }) => {
       return { success: true, user: userData };
     } catch (error) {
       console.error('Signup error:', error);
-      
       // Handle network errors specifically
       let errorMessage = 'An unexpected error occurred';
       

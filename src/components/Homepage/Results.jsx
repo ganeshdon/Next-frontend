@@ -7,7 +7,6 @@ import { useRouter } from 'next/router';
 const Results = ({ extractedData, excelFile, filename, onReset, pagesUsed = 0, isAnonymous = false }) => {
   const router = useRouter();
   const handleDownload = () => {
-    console.log('Download button clicked - generating comprehensive CSV');
 
     if (!extractedData) {
       alert('No data available for download. Please try processing the file again.');
@@ -114,8 +113,6 @@ const Results = ({ extractedData, excelFile, filename, onReset, pagesUsed = 0, i
       link.href = dataUrl;
       link.download = `${originalName}-complete-data.csv`;
       link.click();
-
-      console.log('Comprehensive CSV download completed');
 
     } catch (error) {
       console.error('CSV download error:', error);
