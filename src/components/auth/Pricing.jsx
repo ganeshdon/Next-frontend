@@ -112,7 +112,7 @@ const Pricing = () => {
     {
       id: 'starter',
       name: 'Starter',
-      price: { monthly: 15, annual: 12 },
+      price: { monthly: 1, annual: 12 },
       pages: 400,
       features: [
         '4 pages / month'
