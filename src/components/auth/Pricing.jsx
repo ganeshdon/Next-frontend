@@ -105,10 +105,11 @@ const Pricing = () => {
     {
       id: 'starter',
       name: 'Starter',
-      price: { monthly: 1, annual: 12 },
-      pages: 400,
+      price: { monthly: 15, annual: 90 },
+      pages: { monthly: 400, annual: 4800 },
       features: [
-        '4 pages / month'
+        '400 pages / month',
+        '4800 pages / year (annual)'
       ],
       buttonText: 'Buy',
       buttonVariant: 'default',
@@ -117,10 +118,11 @@ const Pricing = () => {
     {
       id: 'professional',
       name: 'Professional',
-      price: { monthly: 30, annual: 24 },
-      pages: 1000,
+      price: { monthly: 30, annual: 180 },
+      pages: { monthly: 1000, annual: 12000 },
       features: [
-        '1000 pages / month'
+        '1000 pages / month',
+        '12000 pages / year (annual)'
       ],
       buttonText: 'Buy',
       buttonVariant: 'default',
@@ -129,10 +131,11 @@ const Pricing = () => {
     {
       id: 'business',
       name: 'Business',
-      price: { monthly: 50, annual: 40 },
-      pages: 4000,
+      price: { monthly: 50, annual: 300 },
+      pages: { monthly: 4000, annual: 48000 },
       features: [
-        '4000 pages / month'
+        '4000 pages / month',
+        '48000 pages / year (annual)'
       ],
       buttonText: 'Buy',
       buttonVariant: 'default',
@@ -309,7 +312,9 @@ const Pricing = () => {
                           {formatPrice(plan)}
                         </span>
                         {typeof plan.price[billingInterval] === 'number' && (
-                          <span className="text-sm sm:text-base md:text-lg text-gray-600 ml-1 sm:ml-2">/month</span>
+                          <span className="text-sm sm:text-base md:text-lg text-gray-600 ml-1 sm:ml-2">
+                            {billingInterval === 'annual' ? '/year' : '/month'}
+                          </span>
                         )}
                       </div>
                     </div>

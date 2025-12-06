@@ -475,7 +475,7 @@ const Converter = () => {
     }
 
     if (user.subscription_tier === 'daily_free') {
-      return `${user.pages_remaining} of 7 pages remaining today`;
+      return `${user.pages_remaining} of 7 pages remaining`;
     }
 
     return `${user.pages_remaining} of ${user.pages_limit} pages remaining this month`;

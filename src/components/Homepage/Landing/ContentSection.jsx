@@ -21,7 +21,7 @@ export default function ContentSection() {
               Managing finances becomes significantly easier when your bank statements are in Excel or CSV format. Instead of manually typing hundreds of transactions, a bank statement converter uses advanced OCR (Optical Character Recognition) and AI technology to read your statements and convert them within seconds. This is essential for accountants, small business owners, freelancers, loan applicants, and anyone who needs to analyze their spending patterns or prepare financial reports.
             </p>
             <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
-              Get started today with <span className="font-semibold text-slate-900">7 free pages daily</span> on yourbankstatementconverter.com - perfect for converting a typical monthly bank statement without any cost.
+              Get started today with <span className="font-semibold text-slate-900">7 free pages</span> on yourbankstatementconverter.com - perfect for converting a typical monthly bank statement without any cost.
             </p>
           </div>
 
@@ -41,7 +41,7 @@ export default function ContentSection() {
                 <div>
                   <h4 className="text-lg sm:text-xl font-semibold text-slate-900 mb-2">Create Your Free Account</h4>
                   <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
-                    Sign up in seconds to unlock your daily 7 free page conversions. No credit card required for the free tier.
+                    Sign up in seconds to unlock 7 free page conversions. No credit card required for the free tier.
                   </p>
                 </div>
               </div>
@@ -128,7 +128,7 @@ export default function ContentSection() {
               <div>
                 <h3 className="text-lg sm:text-xl font-semibold text-slate-900 mb-2">Flexible Plans for Every Need</h3>
                 <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
-                  Start with 7 free pages daily - ideal for personal use. Need more? Choose from affordable plans on our <Link href="/pricing" className="text-blue-600 hover:underline font-semibold cursor-pointer">pricing plans</Link>  for bulk conversions, priority processing, and business features.
+                  Start with 7 free pages - ideal for personal use. Need more? Choose from affordable plans on our <Link href="/pricing" className="text-blue-600 hover:underline font-semibold cursor-pointer">pricing plans</Link>  for bulk conversions, priority processing, and business features.
                 </p>
               </div>
 

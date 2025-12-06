@@ -29,27 +29,27 @@ export default function UseCases() {
     {
       icon: Calculator,
       title: 'For Accountants & Bookkeepers',
-      description: 'Stop manually entering bank transactions into accounting software. The free tier handles 1-2 client statements daily, while professional plans let you process unlimited clients. Convert statements to CSV and import directly into QuickBooks, Xero, FreshBooks, or Tally. Save 10+ hours per client every month.'
+      description: 'Stop manually entering bank transactions into accounting software. The free tier handles 1-2 client statements, while professional plans let you process unlimited clients. Convert statements to CSV and import directly into QuickBooks, Xero, FreshBooks, or Tally. Save 10+ hours per client every month.'
     },
     {
       icon: FileCheck,
       title: 'For Loan Applications',
-      description: 'Banks and lenders require statements in specific formats. With 7 free pages daily, you can convert typical mortgage application requirements (3-6 months of statements) over a few days, or upgrade for instant access when time is critical.'
+      description: 'Banks and lenders require statements in specific formats. With 7 free pages, you can convert typical mortgage application requirements (3-6 months of statements), or upgrade for instant access when time is critical.'
     },
     {
       icon: Briefcase,
       title: 'For Small Business Owners',
-      description: 'Reconcile business accounts faster by converting bank statements to Excel. The free daily limit works great for monthly reconciliations, while growing businesses benefit from unlimited plans that handle multiple accounts and locations.'
+      description: 'Reconcile business accounts faster by converting bank statements to Excel. The free limit works great for monthly reconciliations, while growing businesses benefit from unlimited plans that handle multiple accounts and locations.'
     },
     {
       icon: User,
       title: 'For Freelancers & Contractors',
-      description: 'Track income from multiple clients and manage irregular payment schedules. Convert PayPal, Stripe, or bank statements to CSV for easy expense tracking. The 7 free pages daily covers most freelance needs, with affordable upgrades during tax season.'
+      description: 'Track income from multiple clients and manage irregular payment schedules. Convert PayPal, Stripe, or bank statements to CSV for easy expense tracking. The 7 free pages covers most freelance needs, with affordable upgrades during tax season.'
     },
     {
       icon: TrendingUp,
       title: 'For Personal Finance Management',
-      description: 'Import your spending data into budgeting apps or Excel templates. With 7 free pages daily, you can convert all your monthly statements at no cost. Analyze where your money goes, identify subscription charges, and create monthly budget reports.'
+      description: 'Import your spending data into budgeting apps or Excel templates. With 7 free pages, you can convert all your monthly statements at no cost. Analyze where your money goes, identify subscription charges, and create monthly budget reports.'
     },
     {
       icon: FileSearch,

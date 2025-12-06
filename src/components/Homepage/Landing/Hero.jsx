@@ -49,7 +49,7 @@ export default function Hero() {
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-3xl mx-auto mb-6 sm:mb-7 md:mb-8 leading-relaxed px-2 sm:px-4 md:px-0">
             Transform bank statements from any format into organized spreadsheets instantly.
-            Start with <span className="font-semibold text-slate-900">7 free pages daily</span>. No credit card required.
+            Start with <span className="font-semibold text-slate-900">7 free pages</span>. No credit card required.
           </p>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4 max-w-4xl mx-auto mb-8 sm:mb-10 md:mb-12 px-2 sm:px-0">

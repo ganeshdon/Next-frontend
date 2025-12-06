@@ -26,7 +26,7 @@ const Header = () => {
     }
 
     if (tier === 'daily_free') {
-      return `${user.pages_remaining}/7 today`;
+      return `${user.pages_remaining}/7`;
     }
 
     // Handle all paid tier names (including Dodo plans: starter, professional, business)

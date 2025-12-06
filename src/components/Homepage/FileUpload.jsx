@@ -2,12 +2,14 @@ import React, { useState, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { Upload, FileText, CheckCircle, Shield } from 'lucide-react';
 import Button from '@/components/ui/button';
+import { useAuth } from '@/hooks/AuthContext';
 
 
 const FileUpload = ({ onFileUpload }) => {
   const [dragActive, setDragActive] = useState(false);
   const inputRef = useRef(null);
   const router = useRouter();
+  const { user, isAuthenticated } = useAuth();
 
   const handleDrag = (e) => {
     e.preventDefault();
@@ -38,6 +40,9 @@ const FileUpload = ({ onFileUpload }) => {
   const onButtonClick = () => {
     inputRef.current.click();
   };
+
+  // Check if user has completed their 7 free pages
+  const isFreePagesCompleted = isAuthenticated && user?.subscription_tier === 'daily_free' && user?.pages_remaining === 0;
 
   return (
     <div className="space-y-6 sm:space-y-8" data-testid="file-upload-component">
@@ -88,16 +93,45 @@ const FileUpload = ({ onFileUpload }) => {
             Choose File
           </Button>
 
-          {/* Pages Free Daily Text */}
-          <p className="text-xs sm:text-sm text-gray-700 px-2 sm:px-0">
-            7 pages free daily.{' '}
-            <button
-              onClick={() => router.push('/pricing')}
-              className="text-blue-600  cursor-pointer hover:text-blue-700 underline"
-            >
-              View pricing
-            </button>
-          </p>
+          {/* Free Conversion Text - Show for unauthenticated users */}
+          {!isAuthenticated && (
+            <p className="text-xs sm:text-sm text-gray-700 px-2 sm:px-0">
+              1 free conversion without signup{' '}
+              <button
+                onClick={() => router.push('/signup')}
+                className="text-blue-600 cursor-pointer hover:text-blue-700 underline"
+              >
+                Sign up for more
+              </button>
+            </p>
+          )}
+
+          {/* Pages Free Text - Only show for authenticated users */}
+          {isAuthenticated && (
+            <p className="text-xs sm:text-sm text-gray-700 px-2 sm:px-0">
+              {isFreePagesCompleted ? (
+                <>
+                  Free resource completed{' '}
+                  <button
+                    onClick={() => router.push('/pricing')}
+                    className="text-blue-600 cursor-pointer hover:text-blue-700 underline"
+                  >
+                    Upgrade the plan
+                  </button>
+                </>
+              ) : (
+                <>
+                  7 pages free{' '}
+                  <button
+                    onClick={() => router.push('/pricing')}
+                    className="text-blue-600 cursor-pointer hover:text-blue-700 underline"
+                  >
+                    View pricing
+                  </button>
+                </>
+              )}
+            </p>
+          )}
         </div>
       </div>
 

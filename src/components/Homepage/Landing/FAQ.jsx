@@ -5,17 +5,17 @@ const faqs = [
   {
     category: 'General',
     question: 'Is the bank statement converter free?',
-    answer: 'Yes, registered users get 7 free pages converted daily. This is perfect for converting typical monthly bank statements (3-5 pages) at no cost. If you need more pages, check our flexible pricing plans designed for different usage levels.'
+    answer: 'Yes, registered users get 7 free pages converted. This is perfect for converting typical monthly bank statements (3-5 pages) at no cost. If you need more pages, check our flexible pricing plans designed for different usage levels.'
   },
   {
     category: 'General',
     question: 'Do I need to create an account?',
-    answer: 'Yes, a free account is required to track your daily 7-page limit and store your conversion history securely. Sign up takes less than 30 seconds with just your email.'
+    answer: 'Yes, a free account is required to track your 7-page limit and store your conversion history securely. Sign up takes less than 30 seconds with just your email.'
   },
   {
     category: 'General',
     question: 'What counts as a "page"?',
-    answer: 'Each page of your PDF or uploaded image counts as one page toward your daily limit. A 5-page bank statement uses 5 of your 7 daily free pages.'
+    answer: 'Each page of your PDF or uploaded image counts as one page toward your limit. A 5-page bank statement uses 5 of your 7 free pages.'
   },
   {
     category: 'General',
@@ -40,7 +40,7 @@ const faqs = [
   {
     category: 'Pricing',
     question: 'Do unused free pages roll over?',
-    answer: 'No, the 7 free pages reset daily. However, this daily refresh means you get 210 free pages every month for regular use - enough for most personal banking needs.'
+    answer: 'No, the 7 free pages do not roll over. However, you get 7 free pages after signup - enough for most personal banking needs.'
   },
   {
     category: 'Security',
@@ -65,7 +65,7 @@ const faqs = [
   {
     category: 'Technical',
     question: 'Can I convert multiple statements at once?',
-    answer: 'Yes, you can upload multi-page PDFs containing several months of statements. All pages will be processed into a single organized spreadsheet. Just ensure your page count fits within your daily limit or upgrade your plan.'
+    answer: 'Yes, you can upload multi-page PDFs containing several months of statements. All pages will be processed into a single organized spreadsheet. Just ensure your page count fits within your limit or upgrade your plan.'
   },
   {
     category: 'Technical',
@@ -75,7 +75,7 @@ const faqs = [
   {
     category: 'Use Cases',
     question: 'Can I use this for loan applications?',
-    answer: 'Absolutely. Banks and lenders often require statements in specific formats. With 7 free pages daily, you can convert several months of statements over a few days. For urgent applications, premium plans give instant access to unlimited conversions.'
+    answer: 'Absolutely. Banks and lenders often require statements in specific formats. With 7 free pages, you can convert several months of statements. For urgent applications, premium plans give instant access to unlimited conversions.'
   },
   {
     category: 'Use Cases',

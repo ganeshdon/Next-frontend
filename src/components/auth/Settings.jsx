@@ -148,7 +148,7 @@ const Settings = () => {
     }
 
     if (user.subscription_tier === 'daily_free') {
-      return `${user.pages_remaining}/${user.pages_limit} pages today (resets daily)`;
+      return `${user.pages_remaining}/${user.pages_limit} pages`;
     }
 
     return `${user.pages_remaining}/${user.pages_limit} pages this month`;

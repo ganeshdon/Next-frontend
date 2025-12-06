@@ -173,7 +173,7 @@ const Results = ({ extractedData, excelFile, filename, onReset, pagesUsed = 0, i
               </Button>
             </div>
             <p className="text-xs sm:text-sm text-blue-700 mt-2">
-              Sign up to get 7 free conversions daily plus advanced features!
+              Sign up to get 7 free conversions plus advanced features!
             </p>
           </Card>
         )}
